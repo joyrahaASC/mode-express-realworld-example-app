@@ -1,5 +1,10 @@
 # Repository Metadata Knowledge Base
 
+## `src`
+| File Path | Core Purpose | Exposed Functions |
+|-----------|--------------|-------------------|
+| `src/main.ts` | Serves as the main entry point for an Express.js REST API application. Configures middleware (CORS, body parsing, static file serving), mounts application routes, implements centralized error handling for unauthorized and HTTP exceptions, and starts the HTTP server on the configured port. | <b>`app.get('/', (req: express.Request, res: express.Response) => {...})`</b>: Handles GET requests to the root path and returns a JSON response indicating the API status and base path.<br/><b>`app.use((err: Error | HttpException, req: express.Request, res: express.Response, next: express.NextFunction) => {...})`</b>: Global error handling middleware that catches UnauthorizedError (401), custom HttpException errors with specific error codes, and generic errors (500), returning appropriate JSON error responses.<br/><b>`app.listen(PORT, () => {...})`</b>: Starts the Express server on the specified PORT (from environment variable or default 3000) and logs server activation to console. |
+
 ## `src/app/models`
 | File Path | Core Purpose | Exposed Functions |
 |-----------|--------------|-------------------|
@@ -39,4 +44,56 @@
 | `src/app/routes/profile/profile.model.ts` | Defines the TypeScript interface for a user Profile entity in the RealWorld application. This interface specifies the structure for profile data including username, bio, image URL, and following status, serving as a data contract for profile-related operations across the application. |  |
 | `src/app/routes/profile/profile.service.ts` | Provides business logic services for user profile operations in a social networking application. Handles retrieving user profiles, following users, and unfollowing users through Prisma ORM database interactions. Maps database results to profile response objects and throws HTTP exceptions for error cases. | <b>`export const getProfile = async (usernamePayload: string, id?: number)`</b>: Retrieves a user profile by username from the database, including follower relationships, and returns a mapped profile object. Throws a 404 HTTP exception if the profile is not found.<br/><b>`export const followUser = async (usernamePayload: string, id: number)`</b>: Creates a follow relationship between the authenticated user (by id) and the target user (by username), then returns the updated profile with follower information.<br/><b>`export const unfollowUser = async (usernamePayload: string, id: number)`</b>: Removes the follow relationship between the authenticated user (by id) and the target user (by username), then returns the updated profile with follower information. |
 | `src/app/routes/profile/profile.utils.ts` | Provides a utility function for transforming User domain entities into Profile view models for the profile feature. Maps user data including username, bio, image, and following status based on the authenticated user's relationship to the target user. | <b>`const profileMapper = (user: any, id: number | undefined): Profile`</b>: Transforms a User entity into a Profile object, determining the following status by checking if the authenticated user (identified by id) is in the target user's followedBy list. |
+
+## `src/app/routes/tag`
+| File Path | Core Purpose | Exposed Functions |
+|-----------|--------------|-------------------|
+| `src/app/routes/tag/tag.controller.ts` | Defines the HTTP routing controller for tag-related API endpoints in a RealWorld example application. Exposes a single GET endpoint to retrieve the top 10 popular tags, with optional authentication support. | <b>`router.get('/tags', auth.optional, async (req: Request, res: Response, next: NextFunction) => {...})`</b>: Handles GET requests to /api/tags endpoint to retrieve a list of popular tag names, optionally using authenticated user context. |
+| `src/app/routes/tag/tag.model.ts` | Defines the TypeScript interface for a Tag entity in the RealWorld example application. This interface establishes the data contract for tag objects used throughout the application, specifying that each tag must have a name property of type string. |  |
+| `src/app/routes/tag/tag.service.ts` | Provides tag retrieval service for the RealWorld application by querying tags associated with articles from demo authors or a specific author. Returns the top 10 most popular tags ordered by article count. | <b>`const getTags = async (id?: number): Promise<string[]>`</b>: Retrieves and returns an array of tag names filtered by demo status or optional author ID, ordered by article count descending and limited to 10 results. |
+
+## `src/prisma`
+| File Path | Core Purpose | Exposed Functions |
+|-----------|--------------|-------------------|
+| `src/prisma/prisma-client.ts` | Provides a singleton instance of PrismaClient for database access throughout the application. Implements a global caching strategy to prevent multiple Prisma Client instances in development mode, ensuring efficient connection pooling and resource management. | <b>`export default prisma`</b>: Exports the singleton PrismaClient instance for use across the application, either retrieving from global cache or creating a new instance. |
+| `src/prisma/schema.prisma` | Defines the Prisma database schema for a RealWorld blogging application, specifying PostgreSQL as the datasource and modeling the core entities: Article, Comment, Tag, and User. Establishes relationships between users, articles, comments, tags, and favorites, including self-referential user following relationships. |  |
+| `src/prisma/seed.ts` | Database seeding script for a RealWorld example application that populates the Prisma database with demo data. Generates 12 users, creates 12 articles per user, and adds comments from all users to each article using randomly generated fake data. | <b>`export const generateUser = async (): Promise<RegisteredUser>`</b>: Creates and returns a new user with randomly generated credentials and profile information marked as demo data.<br/><b>`export const generateArticle = async (id: number)`</b>: Generates and creates a new article with random title, description, body content, and tags for a specified user ID.<br/><b>`export const generateComment = async (id: number, slug: string)`</b>: Adds a randomly generated comment to a specific article identified by its slug for a given user ID. |
+
+## `src/prisma/migrations/20210924225358_initial`
+| File Path | Core Purpose | Exposed Functions |
+|-----------|--------------|-------------------|
+| `src/prisma/migrations/20210924225358_initial/migration.sql` | Defines the initial database schema migration for a RealWorld example application using Prisma ORM. Creates tables for Article, Comment, Tag, User, and their relationships including article tags, user favorites, and user follows with appropriate foreign key constraints and indexes. |  |
+
+## `src/prisma/migrations/20211001143221_implicit_tags`
+| File Path | Core Purpose | Exposed Functions |
+|-----------|--------------|-------------------|
+| `src/prisma/migrations/20211001143221_implicit_tags/migration.sql` | Database migration script that refactors the article-tag relationship from an explicit join table (ArticleTags) to an implicit many-to-many relationship using Prisma's convention (_ArticleToTag). Adds a unique constraint on tag names and establishes cascading foreign key relationships between articles and tags. |  |
+
+## `src/prisma/migrations/20211105153605_api_url`
+| File Path | Core Purpose | Exposed Functions |
+|-----------|--------------|-------------------|
+| `src/prisma/migrations/20211105153605_api_url/migration.sql` | This is a Prisma database migration file that alters the User table schema. It updates the default value for the 'image' column to point to a specific profile image URL hosted on the RealWorld API domain. |  |
+
+## `src/prisma/migrations/20211221184529_deprecated_preview`
+| File Path | Core Purpose | Exposed Functions |
+|-----------|--------------|-------------------|
+| `src/prisma/migrations/20211221184529_deprecated_preview/migration.sql` | This is a Prisma database migration SQL script that renames deprecated unique index constraints to follow the updated naming convention. It updates four unique indexes across Article, Tag, and User tables to align with Prisma's current preview feature requirements. |  |
+
+## `src/tests`
+| File Path | Core Purpose | Exposed Functions |
+|-----------|--------------|-------------------|
+| `src/tests/prisma-mock.ts` | Provides a mocked Prisma database client for testing purposes in a Jest environment. Configures automatic mock reset before each test and exports a deep mock proxy of PrismaClient to enable isolated unit testing without actual database connections. | <b>`export default prismaMock`</b>: Exports the mocked PrismaClient instance as a DeepMockProxy for use in test files throughout the application. |
+
+## `src/tests/services`
+| File Path | Core Purpose | Exposed Functions |
+|-----------|--------------|-------------------|
+| `src/tests/services/article.service.test.ts` | Provides comprehensive unit tests for the article service layer, specifically testing the deleteComment, favoriteArticle, and unfavoriteArticle functions. Validates error handling for missing users and comments, and verifies correct return values using mocked Prisma database interactions. |  |
+| `src/tests/services/auth.service.test.ts` | Provides comprehensive unit test coverage for the authentication service module. Tests user creation, login, current user retrieval, and user update operations, validating both successful flows and error handling for invalid inputs such as blank fields, duplicate users, and incorrect credentials. |  |
+| `src/tests/services/profile.service.test.ts` | Provides comprehensive unit test coverage for the profile service module, validating user profile retrieval, follow, and unfollow operations. Tests verify correct behavior for successful operations and error handling when users are not found, using mocked Prisma database interactions. |  |
+| `src/tests/services/tag.service.test.ts` | This is a test specification file for the TagService component in a RealWorld example application. It defines a test suite structure for the getTags method but contains only a placeholder TODO test, indicating the test implementation is incomplete due to issues with mocking Prisma's groupBy method. |  |
+
+## `src/tests/utils`
+| File Path | Core Purpose | Exposed Functions |
+|-----------|--------------|-------------------|
+| `src/tests/utils/profile.utils.test.ts` | Contains unit tests for the profile utility mapper function. Validates that the profileMapper correctly transforms user objects with follower relationships into profile response objects, testing scenarios where a user is followed, not followed, or has no followers. |  |
 
