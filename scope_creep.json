@@ -2,27 +2,33 @@
   "unauthorized_modifications": [
     {
       "file": "src/app/routes/article/author.mapper.ts",
-      "status": "unauthorized_modification"
+      "status": "unauthorized_modification",
+      "severity": "CRITICAL (Blast Radius Violation)"
     },
     {
       "file": "src/app/routes/auth/token.utils.ts",
-      "status": "unauthorized_modification"
+      "status": "unauthorized_modification",
+      "severity": "CRITICAL (Blast Radius Violation)"
     },
     {
       "file": "src/app/routes/tag/tag.service.ts",
-      "status": "unauthorized_modification"
+      "status": "unauthorized_modification",
+      "severity": "CRITICAL (Blast Radius Violation)"
     },
     {
       "file": "src/main.ts",
-      "status": "unauthorized_modification"
+      "status": "unauthorized_modification",
+      "severity": "CRITICAL (Blast Radius Violation)"
     },
     {
       "file": "src/prisma/migrations/20210924225358_initial/migration.sql",
-      "status": "unauthorized_modification"
+      "status": "unauthorized_modification",
+      "severity": "CRITICAL (Blast Radius Violation)"
     },
     {
       "file": "src/prisma/migrations/20211001143221_implicit_tags/migration.sql",
-      "status": "unauthorized_modification"
+      "status": "unauthorized_modification",
+      "severity": "CRITICAL (Blast Radius Violation)"
     }
   ]
 }
