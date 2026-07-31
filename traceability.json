@@ -1,0 +1,10 @@
+{
+  "src/app/routes/article/comment.model.ts": [],
+  "src/app/routes/article/article.model.ts": [],
+  "src/app/routes/article/article.service.ts": [],
+  "src/app/routes/auth/registered-user.model.ts": [],
+  "src/app/routes/article/article.mapper.ts": [],
+  "src/app/routes/article/article.controller.ts": [],
+  "src/tests/services/article.service.test.ts": [],
+  "src/app/routes/routes.ts": []
+}

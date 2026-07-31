@@ -1,0 +1,84 @@
+{
+  "missing_requirements": [
+    {
+      "file": "src/app/routes/auth/auth.controller.ts",
+      "checklist_item": "Review the authentication controller structure to understand the pattern for controller implementations",
+      "reason": "File was expected to be modified but was not touched in the PR."
+    },
+    {
+      "file": "src/app/routes/auth/auth.controller.ts",
+      "checklist_item": "Confirm that auth endpoints do not return article data and therefore do not require readingTime field",
+      "reason": "File was expected to be modified but was not touched in the PR."
+    },
+    {
+      "file": "src/app/routes/auth/auth.controller.ts",
+      "checklist_item": "Verify that authentication middleware patterns used in auth.controller.ts are consistent with article.controller.ts",
+      "reason": "File was expected to be modified but was not touched in the PR."
+    },
+    {
+      "file": "src/app/routes/auth/auth.controller.ts",
+      "checklist_item": "No code changes required - this file serves as architectural reference for controller pattern consistency",
+      "reason": "File was expected to be modified but was not touched in the PR."
+    },
+    {
+      "file": "src/app/routes/auth/auth.service.ts",
+      "checklist_item": "Review the authentication service structure to understand the pattern for service layer implementations",
+      "reason": "File was expected to be modified but was not touched in the PR."
+    },
+    {
+      "file": "src/app/routes/auth/auth.service.ts",
+      "checklist_item": "Confirm that auth services do not handle article data and therefore do not require readingTime calculation logic",
+      "reason": "File was expected to be modified but was not touched in the PR."
+    },
+    {
+      "file": "src/app/routes/auth/auth.service.ts",
+      "checklist_item": "Verify that Prisma query patterns in auth.service.ts are consistent with article.service.ts",
+      "reason": "File was expected to be modified but was not touched in the PR."
+    },
+    {
+      "file": "src/app/routes/auth/auth.service.ts",
+      "checklist_item": "No code changes required - this file serves as architectural reference for service layer pattern consistency",
+      "reason": "File was expected to be modified but was not touched in the PR."
+    },
+    {
+      "file": "src/app/routes/profile/profile.controller.ts",
+      "checklist_item": "Review the profile controller structure to understand the pattern for controller implementations",
+      "reason": "File was expected to be modified but was not touched in the PR."
+    },
+    {
+      "file": "src/app/routes/profile/profile.controller.ts",
+      "checklist_item": "Confirm that profile endpoints do not return article data and therefore do not require readingTime field",
+      "reason": "File was expected to be modified but was not touched in the PR."
+    },
+    {
+      "file": "src/app/routes/profile/profile.controller.ts",
+      "checklist_item": "Verify that profile response serialization patterns are consistent with article response patterns",
+      "reason": "File was expected to be modified but was not touched in the PR."
+    },
+    {
+      "file": "src/app/routes/profile/profile.controller.ts",
+      "checklist_item": "No code changes required - this file serves as architectural reference for controller pattern consistency",
+      "reason": "File was expected to be modified but was not touched in the PR."
+    },
+    {
+      "file": "src/app/routes/tag/tag.controller.ts",
+      "checklist_item": "Review the tag controller structure to understand the pattern for controller implementations",
+      "reason": "File was expected to be modified but was not touched in the PR."
+    },
+    {
+      "file": "src/app/routes/tag/tag.controller.ts",
+      "checklist_item": "Confirm that tag endpoints do not return article data and therefore do not require readingTime field",
+      "reason": "File was expected to be modified but was not touched in the PR."
+    },
+    {
+      "file": "src/app/routes/tag/tag.controller.ts",
+      "checklist_item": "Verify that tag response serialization patterns are consistent with article response patterns",
+      "reason": "File was expected to be modified but was not touched in the PR."
+    },
+    {
+      "file": "src/app/routes/tag/tag.controller.ts",
+      "checklist_item": "No code changes required - this file serves as architectural reference for controller pattern consistency",
+      "reason": "File was expected to be modified but was not touched in the PR."
+    }
+  ]
+}
