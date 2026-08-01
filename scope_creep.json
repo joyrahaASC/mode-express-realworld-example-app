@@ -1,0 +1,19 @@
+{
+  "unauthorized_modifications": [
+    {
+      "file": "src/app/routes/article/comment.model.ts",
+      "status": "unauthorized_modification",
+      "severity": "CRITICAL (Reference Pattern Modified)"
+    },
+    {
+      "file": "src/app/routes/auth/registered-user.model.ts",
+      "status": "unauthorized_modification",
+      "severity": "CRITICAL (Reference Pattern Modified)"
+    },
+    {
+      "file": "src/app/routes/auth/token.utils.ts",
+      "status": "unauthorized_modification",
+      "severity": "CRITICAL (Blast Radius Violation)"
+    }
+  ]
+}
