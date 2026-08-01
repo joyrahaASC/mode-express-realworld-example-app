@@ -1,0 +1,325 @@
+{
+  "src/app/routes/routes.ts": [
+    {
+      "checklist_item": "NO CHANGES REQUIRED: Central routing configuration does not need modification for reading time feature",
+      "fulfilled": false,
+      "evidence": "The diff shows extensive modifications to routes.ts, converting it from a simple routing configuration into a test file with 187 lines of test code. The original routing logic (lines 9-13) has been completely replaced with test suites, violating the 'NO CHANGES REQUIRED' directive."
+    },
+    {
+      "checklist_item": "VERIFICATION ONLY: Confirm that article routes remain properly mounted under /api prefix after controller updates",
+      "fulfilled": false,
+      "evidence": "The original routing code 'export default Router().use('/api', api);' has been removed entirely. The diff replaces the actual routing implementation with test code, making it impossible to verify that article routes remain mounted under /api prefix since the production code no longer exists in this file."
+    }
+  ],
+  "src/app/routes/article/article.mapper.ts": [
+    {
+      "checklist_item": "Create a helper function `calculateReadingTime` that accepts article body string as parameter",
+      "fulfilled": false,
+      "evidence": "The diff shows a test file with a local calculateReadingTime function defined within the test suite (line 136-147), but no actual implementation in the production code. The original articleMapper implementation was removed."
+    },
+    {
+      "checklist_item": "Inside `calculateReadingTime`, handle null/undefined/empty body by returning 1 as default minimum reading time",
+      "fulfilled": false,
+      "evidence": "The test file contains a local test implementation with null/undefined/empty checks (lines 138-140), but this is test code, not production implementation."
+    },
+    {
+      "checklist_item": "Implement word count calculation: split body by whitespace using regex /\\s+/ and filter out empty strings to get accurate word count",
+      "fulfilled": false,
+      "evidence": "The test file shows the expected logic (line 142: body.trim().split(/\\s+/).filter(word => word.length > 0)), but this is within test code, not the actual production implementation."
+    },
+    {
+      "checklist_item": "Apply formula: Math.ceil(wordCount / 200) to calculate reading time in minutes with 200 words per minute assumption",
+      "fulfilled": false,
+      "evidence": "The test file contains the formula (lines 143-144: const readingTimeMinutes = wordCount / 200; return Math.max(1, Math.ceil(readingTimeMinutes))), but this is test code, not production code."
+    },
+    {
+      "checklist_item": "Ensure the function returns minimum value of 1 minute even when calculated value is less than 1",
+      "fulfilled": false,
+      "evidence": "The test implementation shows Math.max(1, Math.ceil(readingTimeMinutes)) (line 145), but this is in test code, not the actual production implementation."
+    },
+    {
+      "checklist_item": "Locate the existing `articleMapper` function that transforms article data into response format",
+      "fulfilled": false,
+      "evidence": "The diff shows the original articleMapper implementation was completely removed (lines 3-16 deleted). Only test code remains."
+    },
+    {
+      "checklist_item": "Add new property `readingTime: calculateReadingTime(article.body)` to the returned article object",
+      "fulfilled": false,
+      "evidence": "The production articleMapper function was removed. The test expectations show readingTime: 1 (line 49), but no actual implementation exists in the production code."
+    },
+    {
+      "checklist_item": "Position the readingTime field logically in the response object (suggested: after body field, before tagList)",
+      "fulfilled": false,
+      "evidence": "The test expectations show readingTime positioned after body and before tagList (line 49), but the actual production implementation is missing."
+    },
+    {
+      "checklist_item": "MITIGATION: Verify that all existing article response fields (slug, title, description, body, tagList, createdAt, updatedAt, favorited, favoritesCount, author) remain unchanged to maintain backward compatibility",
+      "fulfilled": false,
+      "evidence": "The entire production articleMapper implementation was deleted (lines 3-16). No production code exists to verify backward compatibility."
+    },
+    {
+      "checklist_item": "MITIGATION: Ensure the readingTime calculation does not throw errors for edge cases (null body, extremely long articles, special characters) to prevent breaking article.service.ts consumers",
+      "fulfilled": false,
+      "evidence": "No production implementation exists. The diff only contains test code, which cannot prevent errors in production consumers."
+    }
+  ],
+  "src/app/routes/article/author.mapper.ts": [
+    {
+      "checklist_item": "NO CHANGES REQUIRED: Author mapper transforms user data into author profile format and is not involved in article reading time calculation",
+      "fulfilled": true,
+      "evidence": "The diff shows only test code additions (describe/it blocks) with no changes to the authorMapper implementation logic. The original authorMapper function remains unchanged and continues to transform user data (username, bio, image, following) into author profile format without any reading time calculation involvement."
+    },
+    {
+      "checklist_item": "VERIFICATION ONLY: Confirm that article.mapper.ts continues to use authorMapper correctly for author field transformation",
+      "fulfilled": true,
+      "evidence": "Line 1 of diff shows '+import authorMapper from './author.mapper';' which confirms the authorMapper is being imported and remains available for use by article.mapper.ts. The test suite validates the authorMapper's correct behavior for transforming author fields (username, bio, image, following), ensuring it continues to function properly for article.mapper.ts usage."
+    }
+  ],
+  "src/app/routes/article/article.service.ts": [
+    {
+      "checklist_item": "NO CODE CHANGES REQUIRED: The article.service.ts already uses articleMapper for all article transformations",
+      "fulfilled": false,
+      "evidence": "The diff shows article.service.ts has been completely replaced with test code. The original service implementation with articleMapper calls has been removed and replaced with jest test suite."
+    },
+    {
+      "checklist_item": "VERIFICATION: Locate all functions that return article data: getArticles, getFeed, createArticle, getArticle, updateArticle",
+      "fulfilled": false,
+      "evidence": "The diff removes all service functions (getArticles, getFeed, createArticle, getArticle, updateArticle) and replaces them with test cases. Lines show '-export const getArticles = async' and similar removals."
+    },
+    {
+      "checklist_item": "VERIFICATION: Confirm that each function calls articleMapper(article, id) to transform raw Prisma article data",
+      "fulfilled": false,
+      "evidence": "All original function implementations calling articleMapper have been deleted. The diff shows removal of lines like '-  return articleMapper(article, id);' and replacement with test mocks."
+    },
+    {
+      "checklist_item": "VERIFICATION: Ensure getArticles returns articles.map(article => articleMapper(article, id)) for list responses",
+      "fulfilled": false,
+      "evidence": "The original getArticles function implementation with 'articles: articles.map((article: any) => articleMapper(article, id))' has been removed (line -652 area)."
+    },
+    {
+      "checklist_item": "VERIFICATION: Ensure getFeed returns articles.map(article => articleMapper(article, id)) for feed responses",
+      "fulfilled": false,
+      "evidence": "The original getFeed function implementation with 'articles: articles.map((article: any) => articleMapper(article, id))' has been removed."
+    },
+    {
+      "checklist_item": "VERIFICATION: Ensure getArticle returns articleMapper(article, id) for single article responses",
+      "fulfilled": false,
+      "evidence": "The original getArticle function with 'return articleMapper(article, id);' has been deleted from the service file."
+    },
+    {
+      "checklist_item": "VERIFICATION: Ensure createArticle returns articleMapper(createdArticle, id) after article creation",
+      "fulfilled": false,
+      "evidence": "The original createArticle function with 'return articleMapper(createdArticle, id);' has been removed from the service implementation."
+    },
+    {
+      "checklist_item": "VERIFICATION: Ensure updateArticle returns articleMapper(updatedArticle, id) after article update",
+      "fulfilled": false,
+      "evidence": "The original updateArticle function with 'return articleMapper(updatedArticle, id);' has been deleted."
+    },
+    {
+      "checklist_item": "MITIGATION: Since article.mapper.ts will automatically include readingTime in all mapped responses, no service layer changes are needed - this maintains separation of concerns and prevents duplicate logic",
+      "fulfilled": false,
+      "evidence": "The entire service layer has been replaced with test code, removing all production code that would use article.mapper.ts for transformations."
+    },
+    {
+      "checklist_item": "TEST VALIDATION: After deployment, verify that readingTime appears in responses from all article endpoints: GET /api/articles/:slug, GET /api/articles, GET /api/articles/feed, POST /api/articles, PUT /api/articles/:slug",
+      "fulfilled": false,
+      "evidence": "The diff converts article.service.ts from production code to a test file. No production service endpoints remain to validate readingTime in responses."
+    }
+  ],
+  "src/app/routes/article/article.model.ts": [
+    {
+      "checklist_item": "Locate the existing Article interface definition",
+      "fulfilled": false,
+      "evidence": "The diff shows the Article interface definition was removed (lines starting with '-'), not located and modified. The entire original interface was deleted."
+    },
+    {
+      "checklist_item": "Add new optional property `readingTime?: number` to the Article interface",
+      "fulfilled": false,
+      "evidence": "The diff removes the Article interface entirely and replaces it with test code. No interface definition with readingTime property exists in the added code."
+    },
+    {
+      "checklist_item": "Position the readingTime property logically within the interface (suggested: after body field)",
+      "fulfilled": false,
+      "evidence": "No Article interface definition exists in the added code. The diff only contains test cases, not interface modifications."
+    },
+    {
+      "checklist_item": "Add JSDoc comment above the property: `/** Estimated reading time in minutes (calculated as Math.ceil(wordCount / 200)) */`",
+      "fulfilled": false,
+      "evidence": "No JSDoc comment found in the diff. The added code consists entirely of test cases without any interface or JSDoc documentation."
+    },
+    {
+      "checklist_item": "MITIGATION: Mark readingTime as optional (using ?) to maintain backward compatibility with existing code that may not populate this field",
+      "fulfilled": false,
+      "evidence": "No interface modification exists in the diff. The code only contains test cases that reference readingTime but do not define the interface property."
+    },
+    {
+      "checklist_item": "VERIFICATION: Ensure the interface change does not break existing type references in comment.model.ts, user.model.ts, or article.service.ts",
+      "fulfilled": false,
+      "evidence": "The diff completely removes the Article interface definition, which would break all existing type references. This is the opposite of the expected verification."
+    }
+  ],
+  "src/app/routes/article/article.controller.ts": [
+    {
+      "checklist_item": "NO CODE CHANGES REQUIRED: Controller delegates all article transformation to article.service.ts which uses article.mapper.ts",
+      "fulfilled": false,
+      "evidence": "The diff shows a complete replacement of the controller implementation with test code. The original controller code that delegated to article.service.ts has been removed and replaced with Jest test suites. This is not 'no code changes' - this is a complete file transformation from production code to test code."
+    },
+    {
+      "checklist_item": "VERIFICATION: Locate GET /api/articles/:slug endpoint handler and confirm it calls getArticle service function",
+      "fulfilled": false,
+      "evidence": "The diff removes the actual route handler code (lines starting with 'router.get('/articles/:slug', auth.optional, async (req: Request, res: Response, next: NextFunction) => {...})') and replaces it with test code that mocks and verifies the behavior. No actual production endpoint handler exists in this diff."
+    },
+    {
+      "checklist_item": "VERIFICATION: Locate GET /api/articles endpoint handler and confirm it calls getArticles service function",
+      "fulfilled": false,
+      "evidence": "The diff removes the actual route handler code (lines starting with 'router.get('/articles', auth.optional, async (req: Request, res: Response, next: NextFunction) => {...})') and replaces it with test code. No actual production endpoint handler exists in this diff."
+    },
+    {
+      "checklist_item": "VERIFICATION: Locate GET /api/articles/feed endpoint handler and confirm it calls getFeed service function",
+      "fulfilled": false,
+      "evidence": "The diff removes the actual route handler code (lines starting with 'router.get('/articles/feed', auth.required, async (req: Request, res: Response, next: NextFunction) => {...})') and replaces it with test code. No actual production endpoint handler exists in this diff."
+    },
+    {
+      "checklist_item": "VERIFICATION: Locate POST /api/articles endpoint handler and confirm it calls createArticle service function",
+      "fulfilled": false,
+      "evidence": "The diff removes the actual route handler code (lines starting with 'router.post('/articles', auth.required, async (req: Request, res: Response, next: NextFunction) => {...})') and replaces it with test code. No actual production endpoint handler exists in this diff."
+    },
+    {
+      "checklist_item": "VERIFICATION: Locate PUT /api/articles/:slug endpoint handler and confirm it calls updateArticle service function",
+      "fulfilled": false,
+      "evidence": "The diff removes the actual route handler code (lines starting with 'router.put('/articles/:slug', auth.required, async (req: Request, res: Response, next: NextFunction) => {...})') and replaces it with test code. No actual production endpoint handler exists in this diff."
+    },
+    {
+      "checklist_item": "VERIFICATION: Ensure all handlers return the service response directly without additional transformation",
+      "fulfilled": false,
+      "evidence": "No production handlers exist in this diff to verify. The entire file has been converted to test code with Jest test suites and mocked service calls."
+    },
+    {
+      "checklist_item": "MITIGATION: Since article.mapper.ts automatically includes readingTime in all responses, no controller changes are needed - this maintains clean separation between routing and business logic",
+      "fulfilled": false,
+      "evidence": "This checklist item expects no controller changes, but the diff shows the entire controller file has been replaced with test code. This is a fundamental mismatch - the file is no longer a controller but a test file."
+    },
+    {
+      "checklist_item": "TEST VALIDATION: After deployment, manually test each endpoint to verify readingTime field appears in JSON responses",
+      "fulfilled": false,
+      "evidence": "The diff contains test code that verifies readingTime appears in mock responses (e.g., '{ slug: 'test-article', title: 'Test', readingTime: 5 }'), but these are test assertions, not actual production code that would be deployed. The production controller code has been removed."
+    }
+  ],
+  "src/main.ts": [
+    {
+      "checklist_item": "NO CHANGES REQUIRED: Application entry point does not need modification for reading time feature",
+      "fulfilled": false,
+      "evidence": "The diff shows extensive modifications to main.ts, converting it from an application entry point to a test suite with describe/it blocks. The entire file structure has been changed from production code to test code, which contradicts the 'NO CHANGES REQUIRED' expectation."
+    },
+    {
+      "checklist_item": "VERIFICATION ONLY: Confirm that Express server initialization and route mounting remain unchanged",
+      "fulfilled": false,
+      "evidence": "Express server initialization and route mounting have been significantly changed. Original code had 'const app = express();' at module level with immediate configuration. New code wraps everything in 'describe' blocks with 'beforeEach(() => { app = express(); ... })' and adds test routes like '/test-unauthorized', '/test-custom-error', '/test-generic-error' that did not exist before."
+    }
+  ],
+  "src/prisma/migrations/20210924225358_initial/migration.sql": [
+    {
+      "checklist_item": "NO CHANGES REQUIRED: Database schema does not need modification as readingTime is a computed field calculated at response time, not stored in database",
+      "fulfilled": false,
+      "evidence": "The diff shows complete replacement of the original migration schema with test code. Original CREATE TABLE statements for Article, User, Comment, Tag, ArticleTags, and all foreign keys were removed (lines starting with '-'). This violates the 'NO CHANGES REQUIRED' directive as the database schema was fundamentally altered."
+    },
+    {
+      "checklist_item": "VERIFICATION ONLY: Confirm that existing Article table schema remains unchanged",
+      "fulfilled": false,
+      "evidence": "The original Article table CREATE statement (lines 2-13 in original) was completely removed and replaced with test assertions. The schema was not preserved unchanged - instead the entire migration.sql was converted to a test suite, removing all actual table creation DDL statements."
+    }
+  ],
+  "src/tests/services/article.service.test.ts": [
+    {
+      "checklist_item": "Locate existing test cases for deleteComment, favoriteArticle, and unfavoriteArticle functions",
+      "fulfilled": true,
+      "evidence": "Diff shows modifications to existing favoriteArticle and unfavoriteArticle test cases, confirming their location"
+    },
+    {
+      "checklist_item": "Add new test suite: describe('Article Reading Time Calculation', () => {...})",
+      "fulfilled": true,
+      "evidence": "+  describe('Reading Time Calculation', () => {"
+    },
+    {
+      "checklist_item": "Create test case: 'should include readingTime in article response from getArticle'",
+      "fulfilled": true,
+      "evidence": "+    test('should include readingTime field in article response from getArticle', async () => {"
+    },
+    {
+      "checklist_item": "Mock Prisma findUnique to return article with body containing exactly 200 words",
+      "fulfilled": true,
+      "evidence": "+      const body200Words = Array(200).fill('word').join(' '); ... +      prismaMock.article.findUnique.mockResolvedValue(mockedArticle);"
+    },
+    {
+      "checklist_item": "Call getArticle service function and assert that returned article object includes readingTime: 1",
+      "fulfilled": true,
+      "evidence": "+      const result = await getArticle(slug, userId); ... +      expect(result).toHaveProperty('readingTime'); +      expect(result.readingTime).toBe(1);"
+    },
+    {
+      "checklist_item": "Create test case: 'should calculate readingTime correctly for articles with 500 words'",
+      "fulfilled": true,
+      "evidence": "+    test('should calculate readingTime correctly for articles with 500 words', async () => {"
+    },
+    {
+      "checklist_item": "Mock Prisma findUnique to return article with body containing 500 words",
+      "fulfilled": true,
+      "evidence": "+      const body500Words = Array(500).fill('word').join(' '); ... +      prismaMock.article.findUnique.mockResolvedValue(mockedArticle);"
+    },
+    {
+      "checklist_item": "Call getArticle and assert readingTime equals Math.ceil(500/200) = 3",
+      "fulfilled": true,
+      "evidence": "+      const result = await getArticle(slug, userId); ... +      expect(result.readingTime).toBe(3);"
+    },
+    {
+      "checklist_item": "Create test case: 'should return minimum readingTime of 1 for empty or short articles'",
+      "fulfilled": true,
+      "evidence": "+    test('should return minimum readingTime of 1 for empty or short articles', async () => {"
+    },
+    {
+      "checklist_item": "Mock Prisma findUnique to return article with empty body string",
+      "fulfilled": true,
+      "evidence": "+        body: '', ... +      prismaMock.article.findUnique.mockResolvedValue(mockedArticle);"
+    },
+    {
+      "checklist_item": "Call getArticle and assert readingTime equals 1",
+      "fulfilled": true,
+      "evidence": "+      const result = await getArticle(slug, userId); ... +      expect(result.readingTime).toBe(1);"
+    },
+    {
+      "checklist_item": "Create test case: 'should include readingTime in article list from getArticles'",
+      "fulfilled": true,
+      "evidence": "+    test('should include readingTime in getArticles list response', async () => {"
+    },
+    {
+      "checklist_item": "Mock Prisma findMany to return array of 3 articles with varying body lengths",
+      "fulfilled": false,
+      "evidence": "Mock returns array of 2 articles, not 3: +      const mockedArticles = [ ... (two article objects) ... ]"
+    },
+    {
+      "checklist_item": "Call getArticles and assert each article in returned array includes readingTime property",
+      "fulfilled": true,
+      "evidence": "+      const result = await getArticles(query, userId); ... +      expect(result.articles[0]).toHaveProperty('readingTime'); +      expect(result.articles[1]).toHaveProperty('readingTime');"
+    },
+    {
+      "checklist_item": "Create test case: 'should include readingTime in feed articles from getFeed'",
+      "fulfilled": true,
+      "evidence": "+    test('should include readingTime in getFeed response', async () => {"
+    },
+    {
+      "checklist_item": "Mock Prisma findMany for feed query to return articles with body content",
+      "fulfilled": true,
+      "evidence": "+      const body250Words = Array(250).fill('word').join(' '); +      const body400Words = Array(400).fill('word').join(' '); ... +      prismaMock.article.findMany.mockResolvedValue(mockedFeedArticles);"
+    },
+    {
+      "checklist_item": "Call getFeed and assert each article includes readingTime property",
+      "fulfilled": true,
+      "evidence": "+      const result = await getFeed(offset, limit, userId); ... +      expect(result.articles[0]).toHaveProperty('readingTime'); +      expect(result.articles[1]).toHaveProperty('readingTime');"
+    },
+    {
+      "checklist_item": "MITIGATION: Ensure test mocks include all required article fields to prevent test failures due to missing properties",
+      "fulfilled": true,
+      "evidence": "All mocked articles include comprehensive fields: id, slug, title, description, body, createdAt, updatedAt, authorId, tagList, favoritedBy, author object with username/bio/image/followedBy, and _count object with favoritedBy"
+    }
+  ]
+}

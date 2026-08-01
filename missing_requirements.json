@@ -1,0 +1,400 @@
+{
+  "missing_requirements": [
+    {
+      "file": "src/app/routes/auth/auth.ts",
+      "checklist_item": "NO CHANGES REQUIRED: This authentication middleware file does not require modifications for reading time feature",
+      "reason": "File was expected to be modified but was not touched in the PR.",
+      "severity": "HIGH (Tier 1)"
+    },
+    {
+      "file": "src/app/routes/auth/auth.ts",
+      "checklist_item": "VERIFICATION ONLY: Ensure that article endpoints continue to use auth.required and auth.optional middleware correctly after controller updates",
+      "reason": "File was expected to be modified but was not touched in the PR.",
+      "severity": "HIGH (Tier 1)"
+    },
+    {
+      "file": "src/prisma/prisma-client.ts",
+      "checklist_item": "NO CHANGES REQUIRED: Prisma client singleton does not need modification for reading time calculation",
+      "reason": "File was expected to be modified but was not touched in the PR.",
+      "severity": "HIGH (Tier 1)"
+    },
+    {
+      "file": "src/prisma/prisma-client.ts",
+      "checklist_item": "VERIFICATION ONLY: Confirm that article.service.ts continues to use the Prisma client correctly for article queries",
+      "reason": "File was expected to be modified but was not touched in the PR.",
+      "severity": "HIGH (Tier 1)"
+    },
+    {
+      "file": "src/app/routes/auth/auth.service.ts",
+      "checklist_item": "NO CHANGES REQUIRED: Authentication service is not involved in article reading time calculation",
+      "reason": "File was expected to be modified but was not touched in the PR.",
+      "severity": "HIGH (Tier 2)"
+    },
+    {
+      "file": "src/app/routes/auth/auth.service.ts",
+      "checklist_item": "VERIFICATION ONLY: Confirm that user authentication flows remain unaffected by article mapper changes",
+      "reason": "File was expected to be modified but was not touched in the PR.",
+      "severity": "HIGH (Tier 2)"
+    },
+    {
+      "file": "src/app/routes/profile/profile.service.ts",
+      "checklist_item": "NO CHANGES REQUIRED: Profile service operations do not involve article reading time calculation",
+      "reason": "File was expected to be modified but was not touched in the PR.",
+      "severity": "HIGH (Tier 2)"
+    },
+    {
+      "file": "src/app/routes/profile/profile.service.ts",
+      "checklist_item": "VERIFICATION ONLY: Ensure profile endpoints continue to function correctly after article feature updates",
+      "reason": "File was expected to be modified but was not touched in the PR.",
+      "severity": "HIGH (Tier 2)"
+    },
+    {
+      "file": "src/app/routes/auth/auth.controller.ts",
+      "checklist_item": "NO CHANGES REQUIRED: Authentication controller is not involved in article reading time calculation",
+      "reason": "File was expected to be modified but was not touched in the PR.",
+      "severity": "HIGH (Tier 4)"
+    },
+    {
+      "file": "src/app/routes/auth/auth.controller.ts",
+      "checklist_item": "VERIFICATION ONLY: Ensure authentication endpoints remain functional after article feature updates",
+      "reason": "File was expected to be modified but was not touched in the PR.",
+      "severity": "HIGH (Tier 4)"
+    },
+    {
+      "file": "src/app/routes/tag/tag.controller.ts",
+      "checklist_item": "NO CHANGES REQUIRED: Tag controller does not involve article reading time calculation",
+      "reason": "File was expected to be modified but was not touched in the PR.",
+      "severity": "HIGH (Tier 4)"
+    },
+    {
+      "file": "src/app/routes/tag/tag.controller.ts",
+      "checklist_item": "VERIFICATION ONLY: Confirm that tag endpoints continue to function correctly",
+      "reason": "File was expected to be modified but was not touched in the PR.",
+      "severity": "HIGH (Tier 4)"
+    },
+    {
+      "file": "src/app/routes/profile/profile.controller.ts",
+      "checklist_item": "NO CHANGES REQUIRED: Profile controller does not involve article reading time calculation",
+      "reason": "File was expected to be modified but was not touched in the PR.",
+      "severity": "HIGH (Tier 4)"
+    },
+    {
+      "file": "src/app/routes/profile/profile.controller.ts",
+      "checklist_item": "VERIFICATION ONLY: Ensure profile endpoints remain functional after article feature updates",
+      "reason": "File was expected to be modified but was not touched in the PR.",
+      "severity": "HIGH (Tier 4)"
+    },
+    {
+      "file": "src/prisma/seed.ts",
+      "checklist_item": "NO CHANGES REQUIRED: Database seeding script does not need modification as readingTime is calculated dynamically at response time, not stored in database",
+      "reason": "File was expected to be modified but was not touched in the PR.",
+      "severity": "HIGH (Tier 4)"
+    },
+    {
+      "file": "src/prisma/seed.ts",
+      "checklist_item": "VERIFICATION ONLY: Confirm that seeded articles continue to work correctly with the new readingTime calculation in article.mapper.ts",
+      "reason": "File was expected to be modified but was not touched in the PR.",
+      "severity": "HIGH (Tier 4)"
+    },
+    {
+      "file": "src/tests/services/profile.service.test.ts",
+      "checklist_item": "NO CHANGES REQUIRED: Profile service tests do not involve article reading time calculation",
+      "reason": "File was expected to be modified but was not touched in the PR.",
+      "severity": "HIGH (Tier 4)"
+    },
+    {
+      "file": "src/tests/services/profile.service.test.ts",
+      "checklist_item": "VERIFICATION ONLY: Ensure existing profile tests continue to pass after article feature updates",
+      "reason": "File was expected to be modified but was not touched in the PR.",
+      "severity": "HIGH (Tier 4)"
+    },
+    {
+      "file": "src/prisma/migrations/20211105153605_api_url/migration.sql",
+      "checklist_item": "NO CHANGES REQUIRED: This migration file is not involved in article reading time calculation",
+      "reason": "File was expected to be modified but was not touched in the PR.",
+      "severity": "HIGH (Tier 4)"
+    },
+    {
+      "file": "src/prisma/migrations/20211105153605_api_url/migration.sql",
+      "checklist_item": "VERIFICATION ONLY: Ensure existing database migrations remain unaffected",
+      "reason": "File was expected to be modified but was not touched in the PR.",
+      "severity": "HIGH (Tier 4)"
+    },
+    {
+      "file": "Dockerfile",
+      "checklist_item": "NO CHANGES REQUIRED: Docker configuration does not need modification for reading time feature",
+      "reason": "File was expected to be modified but was not touched in the PR.",
+      "severity": "HIGH (Tier 4)"
+    },
+    {
+      "file": "Dockerfile",
+      "checklist_item": "VERIFICATION ONLY: Confirm that containerized application builds and runs correctly with updated code",
+      "reason": "File was expected to be modified but was not touched in the PR.",
+      "severity": "HIGH (Tier 4)"
+    },
+    {
+      "file": "src/prisma/migrations/20211221184529_deprecated_preview/migration.sql",
+      "checklist_item": "NO CHANGES REQUIRED: This migration file is not involved in article reading time calculation",
+      "reason": "File was expected to be modified but was not touched in the PR.",
+      "severity": "HIGH (Tier 4)"
+    },
+    {
+      "file": "src/prisma/migrations/20211221184529_deprecated_preview/migration.sql",
+      "checklist_item": "VERIFICATION ONLY: Ensure existing database migrations remain unaffected",
+      "reason": "File was expected to be modified but was not touched in the PR.",
+      "severity": "HIGH (Tier 4)"
+    },
+    {
+      "file": "src/app/routes/routes.ts",
+      "checklist_item": "NO CHANGES REQUIRED: Central routing configuration does not need modification for reading time feature",
+      "reason": "The diff shows extensive modifications to routes.ts, converting it from a simple routing configuration into a test file with 187 lines of test code. The original routing logic (lines 9-13) has been completely replaced with test suites, violating the 'NO CHANGES REQUIRED' directive.",
+      "severity": "HIGH (Tier 2)"
+    },
+    {
+      "file": "src/app/routes/routes.ts",
+      "checklist_item": "VERIFICATION ONLY: Confirm that article routes remain properly mounted under /api prefix after controller updates",
+      "reason": "The original routing code 'export default Router().use('/api', api);' has been removed entirely. The diff replaces the actual routing implementation with test code, making it impossible to verify that article routes remain mounted under /api prefix since the production code no longer exists in this file.",
+      "severity": "HIGH (Tier 2)"
+    },
+    {
+      "file": "src/app/routes/article/article.mapper.ts",
+      "checklist_item": "Create a helper function `calculateReadingTime` that accepts article body string as parameter",
+      "reason": "The diff shows a test file with a local calculateReadingTime function defined within the test suite (line 136-147), but no actual implementation in the production code. The original articleMapper implementation was removed.",
+      "severity": "HIGH (Tier 2)"
+    },
+    {
+      "file": "src/app/routes/article/article.mapper.ts",
+      "checklist_item": "Inside `calculateReadingTime`, handle null/undefined/empty body by returning 1 as default minimum reading time",
+      "reason": "The test file contains a local test implementation with null/undefined/empty checks (lines 138-140), but this is test code, not production implementation.",
+      "severity": "HIGH (Tier 2)"
+    },
+    {
+      "file": "src/app/routes/article/article.mapper.ts",
+      "checklist_item": "Implement word count calculation: split body by whitespace using regex /\\s+/ and filter out empty strings to get accurate word count",
+      "reason": "The test file shows the expected logic (line 142: body.trim().split(/\\s+/).filter(word => word.length > 0)), but this is within test code, not the actual production implementation.",
+      "severity": "HIGH (Tier 2)"
+    },
+    {
+      "file": "src/app/routes/article/article.mapper.ts",
+      "checklist_item": "Apply formula: Math.ceil(wordCount / 200) to calculate reading time in minutes with 200 words per minute assumption",
+      "reason": "The test file contains the formula (lines 143-144: const readingTimeMinutes = wordCount / 200; return Math.max(1, Math.ceil(readingTimeMinutes))), but this is test code, not production code.",
+      "severity": "HIGH (Tier 2)"
+    },
+    {
+      "file": "src/app/routes/article/article.mapper.ts",
+      "checklist_item": "Ensure the function returns minimum value of 1 minute even when calculated value is less than 1",
+      "reason": "The test implementation shows Math.max(1, Math.ceil(readingTimeMinutes)) (line 145), but this is in test code, not the actual production implementation.",
+      "severity": "HIGH (Tier 2)"
+    },
+    {
+      "file": "src/app/routes/article/article.mapper.ts",
+      "checklist_item": "Locate the existing `articleMapper` function that transforms article data into response format",
+      "reason": "The diff shows the original articleMapper implementation was completely removed (lines 3-16 deleted). Only test code remains.",
+      "severity": "HIGH (Tier 2)"
+    },
+    {
+      "file": "src/app/routes/article/article.mapper.ts",
+      "checklist_item": "Add new property `readingTime: calculateReadingTime(article.body)` to the returned article object",
+      "reason": "The production articleMapper function was removed. The test expectations show readingTime: 1 (line 49), but no actual implementation exists in the production code.",
+      "severity": "HIGH (Tier 2)"
+    },
+    {
+      "file": "src/app/routes/article/article.mapper.ts",
+      "checklist_item": "Position the readingTime field logically in the response object (suggested: after body field, before tagList)",
+      "reason": "The test expectations show readingTime positioned after body and before tagList (line 49), but the actual production implementation is missing.",
+      "severity": "HIGH (Tier 2)"
+    },
+    {
+      "file": "src/app/routes/article/article.mapper.ts",
+      "checklist_item": "MITIGATION: Verify that all existing article response fields (slug, title, description, body, tagList, createdAt, updatedAt, favorited, favoritesCount, author) remain unchanged to maintain backward compatibility",
+      "reason": "The entire production articleMapper implementation was deleted (lines 3-16). No production code exists to verify backward compatibility.",
+      "severity": "HIGH (Tier 2)"
+    },
+    {
+      "file": "src/app/routes/article/article.mapper.ts",
+      "checklist_item": "MITIGATION: Ensure the readingTime calculation does not throw errors for edge cases (null body, extremely long articles, special characters) to prevent breaking article.service.ts consumers",
+      "reason": "No production implementation exists. The diff only contains test code, which cannot prevent errors in production consumers.",
+      "severity": "HIGH (Tier 2)"
+    },
+    {
+      "file": "src/app/routes/article/article.service.ts",
+      "checklist_item": "NO CODE CHANGES REQUIRED: The article.service.ts already uses articleMapper for all article transformations",
+      "reason": "The diff shows article.service.ts has been completely replaced with test code. The original service implementation with articleMapper calls has been removed and replaced with jest test suite.",
+      "severity": "HIGH (Tier 2)"
+    },
+    {
+      "file": "src/app/routes/article/article.service.ts",
+      "checklist_item": "VERIFICATION: Locate all functions that return article data: getArticles, getFeed, createArticle, getArticle, updateArticle",
+      "reason": "The diff removes all service functions (getArticles, getFeed, createArticle, getArticle, updateArticle) and replaces them with test cases. Lines show '-export const getArticles = async' and similar removals.",
+      "severity": "HIGH (Tier 2)"
+    },
+    {
+      "file": "src/app/routes/article/article.service.ts",
+      "checklist_item": "VERIFICATION: Confirm that each function calls articleMapper(article, id) to transform raw Prisma article data",
+      "reason": "All original function implementations calling articleMapper have been deleted. The diff shows removal of lines like '-  return articleMapper(article, id);' and replacement with test mocks.",
+      "severity": "HIGH (Tier 2)"
+    },
+    {
+      "file": "src/app/routes/article/article.service.ts",
+      "checklist_item": "VERIFICATION: Ensure getArticles returns articles.map(article => articleMapper(article, id)) for list responses",
+      "reason": "The original getArticles function implementation with 'articles: articles.map((article: any) => articleMapper(article, id))' has been removed (line -652 area).",
+      "severity": "HIGH (Tier 2)"
+    },
+    {
+      "file": "src/app/routes/article/article.service.ts",
+      "checklist_item": "VERIFICATION: Ensure getFeed returns articles.map(article => articleMapper(article, id)) for feed responses",
+      "reason": "The original getFeed function implementation with 'articles: articles.map((article: any) => articleMapper(article, id))' has been removed.",
+      "severity": "HIGH (Tier 2)"
+    },
+    {
+      "file": "src/app/routes/article/article.service.ts",
+      "checklist_item": "VERIFICATION: Ensure getArticle returns articleMapper(article, id) for single article responses",
+      "reason": "The original getArticle function with 'return articleMapper(article, id);' has been deleted from the service file.",
+      "severity": "HIGH (Tier 2)"
+    },
+    {
+      "file": "src/app/routes/article/article.service.ts",
+      "checklist_item": "VERIFICATION: Ensure createArticle returns articleMapper(createdArticle, id) after article creation",
+      "reason": "The original createArticle function with 'return articleMapper(createdArticle, id);' has been removed from the service implementation.",
+      "severity": "HIGH (Tier 2)"
+    },
+    {
+      "file": "src/app/routes/article/article.service.ts",
+      "checklist_item": "VERIFICATION: Ensure updateArticle returns articleMapper(updatedArticle, id) after article update",
+      "reason": "The original updateArticle function with 'return articleMapper(updatedArticle, id);' has been deleted.",
+      "severity": "HIGH (Tier 2)"
+    },
+    {
+      "file": "src/app/routes/article/article.service.ts",
+      "checklist_item": "MITIGATION: Since article.mapper.ts will automatically include readingTime in all mapped responses, no service layer changes are needed - this maintains separation of concerns and prevents duplicate logic",
+      "reason": "The entire service layer has been replaced with test code, removing all production code that would use article.mapper.ts for transformations.",
+      "severity": "HIGH (Tier 2)"
+    },
+    {
+      "file": "src/app/routes/article/article.service.ts",
+      "checklist_item": "TEST VALIDATION: After deployment, verify that readingTime appears in responses from all article endpoints: GET /api/articles/:slug, GET /api/articles, GET /api/articles/feed, POST /api/articles, PUT /api/articles/:slug",
+      "reason": "The diff converts article.service.ts from production code to a test file. No production service endpoints remain to validate readingTime in responses.",
+      "severity": "HIGH (Tier 2)"
+    },
+    {
+      "file": "src/app/routes/article/article.model.ts",
+      "checklist_item": "Locate the existing Article interface definition",
+      "reason": "The diff shows the Article interface definition was removed (lines starting with '-'), not located and modified. The entire original interface was deleted.",
+      "severity": "HIGH (Tier 2)"
+    },
+    {
+      "file": "src/app/routes/article/article.model.ts",
+      "checklist_item": "Add new optional property `readingTime?: number` to the Article interface",
+      "reason": "The diff removes the Article interface entirely and replaces it with test code. No interface definition with readingTime property exists in the added code.",
+      "severity": "HIGH (Tier 2)"
+    },
+    {
+      "file": "src/app/routes/article/article.model.ts",
+      "checklist_item": "Position the readingTime property logically within the interface (suggested: after body field)",
+      "reason": "No Article interface definition exists in the added code. The diff only contains test cases, not interface modifications.",
+      "severity": "HIGH (Tier 2)"
+    },
+    {
+      "file": "src/app/routes/article/article.model.ts",
+      "checklist_item": "Add JSDoc comment above the property: `/** Estimated reading time in minutes (calculated as Math.ceil(wordCount / 200)) */`",
+      "reason": "No JSDoc comment found in the diff. The added code consists entirely of test cases without any interface or JSDoc documentation.",
+      "severity": "HIGH (Tier 2)"
+    },
+    {
+      "file": "src/app/routes/article/article.model.ts",
+      "checklist_item": "MITIGATION: Mark readingTime as optional (using ?) to maintain backward compatibility with existing code that may not populate this field",
+      "reason": "No interface modification exists in the diff. The code only contains test cases that reference readingTime but do not define the interface property.",
+      "severity": "HIGH (Tier 2)"
+    },
+    {
+      "file": "src/app/routes/article/article.model.ts",
+      "checklist_item": "VERIFICATION: Ensure the interface change does not break existing type references in comment.model.ts, user.model.ts, or article.service.ts",
+      "reason": "The diff completely removes the Article interface definition, which would break all existing type references. This is the opposite of the expected verification.",
+      "severity": "HIGH (Tier 2)"
+    },
+    {
+      "file": "src/app/routes/article/article.controller.ts",
+      "checklist_item": "NO CODE CHANGES REQUIRED: Controller delegates all article transformation to article.service.ts which uses article.mapper.ts",
+      "reason": "The diff shows a complete replacement of the controller implementation with test code. The original controller code that delegated to article.service.ts has been removed and replaced with Jest test suites. This is not 'no code changes' - this is a complete file transformation from production code to test code.",
+      "severity": "HIGH (Tier 4)"
+    },
+    {
+      "file": "src/app/routes/article/article.controller.ts",
+      "checklist_item": "VERIFICATION: Locate GET /api/articles/:slug endpoint handler and confirm it calls getArticle service function",
+      "reason": "The diff removes the actual route handler code (lines starting with 'router.get('/articles/:slug', auth.optional, async (req: Request, res: Response, next: NextFunction) => {...})') and replaces it with test code that mocks and verifies the behavior. No actual production endpoint handler exists in this diff.",
+      "severity": "HIGH (Tier 4)"
+    },
+    {
+      "file": "src/app/routes/article/article.controller.ts",
+      "checklist_item": "VERIFICATION: Locate GET /api/articles endpoint handler and confirm it calls getArticles service function",
+      "reason": "The diff removes the actual route handler code (lines starting with 'router.get('/articles', auth.optional, async (req: Request, res: Response, next: NextFunction) => {...})') and replaces it with test code. No actual production endpoint handler exists in this diff.",
+      "severity": "HIGH (Tier 4)"
+    },
+    {
+      "file": "src/app/routes/article/article.controller.ts",
+      "checklist_item": "VERIFICATION: Locate GET /api/articles/feed endpoint handler and confirm it calls getFeed service function",
+      "reason": "The diff removes the actual route handler code (lines starting with 'router.get('/articles/feed', auth.required, async (req: Request, res: Response, next: NextFunction) => {...})') and replaces it with test code. No actual production endpoint handler exists in this diff.",
+      "severity": "HIGH (Tier 4)"
+    },
+    {
+      "file": "src/app/routes/article/article.controller.ts",
+      "checklist_item": "VERIFICATION: Locate POST /api/articles endpoint handler and confirm it calls createArticle service function",
+      "reason": "The diff removes the actual route handler code (lines starting with 'router.post('/articles', auth.required, async (req: Request, res: Response, next: NextFunction) => {...})') and replaces it with test code. No actual production endpoint handler exists in this diff.",
+      "severity": "HIGH (Tier 4)"
+    },
+    {
+      "file": "src/app/routes/article/article.controller.ts",
+      "checklist_item": "VERIFICATION: Locate PUT /api/articles/:slug endpoint handler and confirm it calls updateArticle service function",
+      "reason": "The diff removes the actual route handler code (lines starting with 'router.put('/articles/:slug', auth.required, async (req: Request, res: Response, next: NextFunction) => {...})') and replaces it with test code. No actual production endpoint handler exists in this diff.",
+      "severity": "HIGH (Tier 4)"
+    },
+    {
+      "file": "src/app/routes/article/article.controller.ts",
+      "checklist_item": "VERIFICATION: Ensure all handlers return the service response directly without additional transformation",
+      "reason": "No production handlers exist in this diff to verify. The entire file has been converted to test code with Jest test suites and mocked service calls.",
+      "severity": "HIGH (Tier 4)"
+    },
+    {
+      "file": "src/app/routes/article/article.controller.ts",
+      "checklist_item": "MITIGATION: Since article.mapper.ts automatically includes readingTime in all responses, no controller changes are needed - this maintains clean separation between routing and business logic",
+      "reason": "This checklist item expects no controller changes, but the diff shows the entire controller file has been replaced with test code. This is a fundamental mismatch - the file is no longer a controller but a test file.",
+      "severity": "HIGH (Tier 4)"
+    },
+    {
+      "file": "src/app/routes/article/article.controller.ts",
+      "checklist_item": "TEST VALIDATION: After deployment, manually test each endpoint to verify readingTime field appears in JSON responses",
+      "reason": "The diff contains test code that verifies readingTime appears in mock responses (e.g., '{ slug: 'test-article', title: 'Test', readingTime: 5 }'), but these are test assertions, not actual production code that would be deployed. The production controller code has been removed.",
+      "severity": "HIGH (Tier 4)"
+    },
+    {
+      "file": "src/main.ts",
+      "checklist_item": "NO CHANGES REQUIRED: Application entry point does not need modification for reading time feature",
+      "reason": "The diff shows extensive modifications to main.ts, converting it from an application entry point to a test suite with describe/it blocks. The entire file structure has been changed from production code to test code, which contradicts the 'NO CHANGES REQUIRED' expectation.",
+      "severity": "HIGH (Tier 4)"
+    },
+    {
+      "file": "src/main.ts",
+      "checklist_item": "VERIFICATION ONLY: Confirm that Express server initialization and route mounting remain unchanged",
+      "reason": "Express server initialization and route mounting have been significantly changed. Original code had 'const app = express();' at module level with immediate configuration. New code wraps everything in 'describe' blocks with 'beforeEach(() => { app = express(); ... })' and adds test routes like '/test-unauthorized', '/test-custom-error', '/test-generic-error' that did not exist before.",
+      "severity": "HIGH (Tier 4)"
+    },
+    {
+      "file": "src/prisma/migrations/20210924225358_initial/migration.sql",
+      "checklist_item": "NO CHANGES REQUIRED: Database schema does not need modification as readingTime is a computed field calculated at response time, not stored in database",
+      "reason": "The diff shows complete replacement of the original migration schema with test code. Original CREATE TABLE statements for Article, User, Comment, Tag, ArticleTags, and all foreign keys were removed (lines starting with '-'). This violates the 'NO CHANGES REQUIRED' directive as the database schema was fundamentally altered.",
+      "severity": "HIGH (Tier 4)"
+    },
+    {
+      "file": "src/prisma/migrations/20210924225358_initial/migration.sql",
+      "checklist_item": "VERIFICATION ONLY: Confirm that existing Article table schema remains unchanged",
+      "reason": "The original Article table CREATE statement (lines 2-13 in original) was completely removed and replaced with test assertions. The schema was not preserved unchanged - instead the entire migration.sql was converted to a test suite, removing all actual table creation DDL statements.",
+      "severity": "HIGH (Tier 4)"
+    },
+    {
+      "file": "src/tests/services/article.service.test.ts",
+      "checklist_item": "Mock Prisma findMany to return array of 3 articles with varying body lengths",
+      "reason": "Mock returns array of 2 articles, not 3: +      const mockedArticles = [ ... (two article objects) ... ]",
+      "severity": "HIGH (Tier 4)"
+    }
+  ]
+}
