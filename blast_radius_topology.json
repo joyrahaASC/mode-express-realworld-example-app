@@ -1,0 +1,42 @@
+{
+  "modified_core_files": [
+    "src/app/routes/article/article.controller.ts",
+    "src/app/routes/article/article.mapper.ts",
+    "src/app/routes/article/article.model.ts",
+    "src/app/routes/article/article.service.ts",
+    "src/app/routes/article/author.mapper.ts",
+    "src/app/routes/article/comment.model.ts",
+    "src/app/routes/auth/registered-user.model.ts",
+    "src/app/routes/auth/token.utils.ts",
+    "src/app/routes/routes.ts",
+    "src/app/routes/tag/tag.service.ts",
+    "src/main.ts",
+    "src/prisma/migrations/20210924225358_initial/migration.sql",
+    "src/prisma/migrations/20211001143221_implicit_tags/migration.sql"
+  ],
+  "downstream_consumers": [
+    "src/app/routes/tag/tag.controller.ts",
+    "src/app/routes/auth/user.model.ts",
+    "src/app/routes/auth/auth.service.ts",
+    "src/prisma/seed.ts",
+    "src/app/routes/profile/profile.utils.ts",
+    "src/app/routes/auth/auth.controller.ts"
+  ],
+  "test_files": [
+    "src/tests/services/article.service.test.ts",
+    "src/tests/services/auth.service.test.ts",
+    "src/app/routes/article/article.controller.spec.ts",
+    "src/app/routes/article/article.mapper.spec.ts",
+    "src/app/routes/article/article.model.spec.ts",
+    "src/app/routes/article/article.service.spec.ts",
+    "src/app/routes/article/author.mapper.spec.ts",
+    "src/app/routes/article/comment.model.spec.ts",
+    "src/app/routes/auth/registered-user.model.spec.ts",
+    "src/app/routes/auth/token.utils.spec.ts",
+    "src/app/routes/routes.spec.ts",
+    "src/app/routes/tag/tag.service.spec.ts",
+    "src/main.spec.ts",
+    "src/prisma/migrations/20210924225358_initial/migration.sql",
+    "src/prisma/migrations/20211001143221_implicit_tags/migration.sql"
+  ]
+}
