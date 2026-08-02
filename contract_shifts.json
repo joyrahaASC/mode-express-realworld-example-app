@@ -1,9 +1,0 @@
-{
-  "contract_shifts": [
-    {
-      "name": "Article",
-      "old_signature": "interface Article {\n  id: number;\n  title: string;\n  slug: string;\n  description: string;\n  body: string;\n  comments: Comment[];\n  favorited: boolean;\n}",
-      "new_signature": "interface Article {\n  id: number;\n  title: string;\n  slug: string;\n  description: string;\n  body: string;\n  readingTime?: number;\n  comments: Comment[];\n  favorited: boolean;\n}"
-    }
-  ]
-}
