@@ -1,0 +1,10 @@
+{
+  "contract_shifts": [
+    {
+      "name": "Article",
+      "old_signature": "interface Article { id: number; title: string; slug: string; description: string; body: string; comments: Comment[]; favorited: boolean; }",
+      "new_signature": "interface Article { id: number; title: string; slug: string; description: string; body: string; readingTime?: number; comments: Comment[]; favorited: boolean; }",
+      "target_file": "src/app/routes/article/article.model.ts"
+    }
+  ]
+}
