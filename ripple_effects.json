@@ -1,0 +1,44 @@
+{
+  "ripples": [
+    {
+      "is_broken": false,
+      "fix_suggestion": "No changes required. The author.mapper.ts file is independent of the article readingTime feature. It only handles author/user data mapping and does not interact with the Article model or article.mapper.ts where the readingTime changes are being implemented. No contract shifts affect this file.",
+      "target_file": "src/app/routes/article/author.mapper.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No changes required. The Article interface modification adds an optional property (readingTime?: number) which is backward compatible. The User model only references the Article type and does not require any updates.",
+      "target_file": "src/app/routes/auth/user.model.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No changes required. The routes.ts file only imports and uses controllers as Express middleware. The addition of the readingTime field to article responses is a backward-compatible change that does not affect the controller's interface or how it's registered in the routing configuration.",
+      "target_file": "src/app/routes/routes.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No changes required. The Article interface is being modified to add an optional property 'readingTime?: number', which is a non-breaking change. The Comment interface uses Article as an optional type reference and will automatically inherit the new optional property without requiring any code modifications.",
+      "target_file": "src/app/routes/article/comment.model.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No changes required. The seed file uses createArticle and addComment functions whose signatures remain unchanged. The new readingTime field is optional and will be automatically calculated by the article mapper when articles are created, maintaining full backward compatibility.",
+      "target_file": "src/prisma/seed.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No changes required. This file does not import or reference any Article-related contracts that were modified in this PR. The profile.utils.ts file only depends on User and Profile models, which are not affected by the addition of the readingTime field to the Article model.",
+      "target_file": "src/app/routes/profile/profile.utils.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No changes required. The main.ts file is not affected by the article readingTime feature changes. It only imports and uses the routes module at a high level without directly depending on article models, mappers, or services. The contract_shifts array is empty, and all changes are additive (optional fields) that maintain backward compatibility.",
+      "target_file": "src/main.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No changes required. This authentication service file has no dependencies on the modified article-related contracts (article.model.ts, article.mapper.ts, article.service.ts). The readingTime feature additions to the article domain do not impact authentication functionality.",
+      "target_file": "src/app/routes/auth/auth.service.ts"
+    }
+  ]
+}
