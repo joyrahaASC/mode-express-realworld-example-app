@@ -1,0 +1,215 @@
+{
+  "src/app/routes/article/article.controller.ts": [
+    {
+      "checklist_item": "Locate the GET /api/articles/:slug endpoint handler",
+      "fulfilled": false,
+      "evidence": "The diff shows the file was completely replaced with test code. Original controller implementation with GET /articles/:slug handler was removed (lines -86 to -97) and replaced with test suite."
+    },
+    {
+      "checklist_item": "Verify that this endpoint calls the appropriate service function that returns article data with readingTime",
+      "fulfilled": false,
+      "evidence": "The actual controller implementation no longer exists in this file. The diff shows only test code that mocks articleService.getArticle, not the actual handler implementation."
+    },
+    {
+      "checklist_item": "Confirm that the response structure res.json({ article: ... }) will automatically include the readingTime field from the mapper",
+      "fulfilled": false,
+      "evidence": "No actual controller code exists. Tests verify mock responses contain readingTime (e.g., line +244: 'readingTime: 4'), but the actual implementation that would pass through mapper data is absent."
+    },
+    {
+      "checklist_item": "Locate the GET /api/articles endpoint handler for listing articles",
+      "fulfilled": false,
+      "evidence": "Original GET /articles handler (lines -30 to -38) was removed. Only test code remains that mocks the behavior."
+    },
+    {
+      "checklist_item": "Verify that this endpoint calls getArticles service function and returns the articles array with readingTime in each article object",
+      "fulfilled": false,
+      "evidence": "The actual handler implementation is missing. Tests mock articleService.getArticles with readingTime (line +45: 'readingTime: 5'), but no real controller code exists to verify."
+    },
+    {
+      "checklist_item": "Locate the GET /api/articles/feed endpoint handler",
+      "fulfilled": false,
+      "evidence": "Original GET /articles/feed handler (lines -47 to -62) was deleted. File now contains only test suite code."
+    },
+    {
+      "checklist_item": "Verify that this endpoint calls getFeed service function and returns the feed articles with readingTime",
+      "fulfilled": false,
+      "evidence": "No actual implementation exists. Tests mock getFeed with readingTime (line +123: 'readingTime: 6'), but the real handler code is absent."
+    },
+    {
+      "checklist_item": "Locate any other endpoints that return article data (POST /api/articles, PUT /api/articles/:slug, POST /api/articles/:slug/favorite, DELETE /api/articles/:slug/favorite)",
+      "fulfilled": false,
+      "evidence": "All original endpoint handlers were removed (POST /articles lines -70 to -78, PUT /articles/:slug lines -88 to -118, favorite endpoints lines -213 to -241). Only test code remains."
+    },
+    {
+      "checklist_item": "For each endpoint that returns article data, verify that the response will include readingTime through the mapper",
+      "fulfilled": false,
+      "evidence": "Cannot verify actual implementation behavior as all controller handlers were replaced with test code. Tests verify mock data includes readingTime but not actual mapper integration."
+    },
+    {
+      "checklist_item": "No code changes should be required in this file if the service layer and mapper are correctly implemented",
+      "fulfilled": false,
+      "evidence": "This expectation is violated. The entire controller implementation was deleted and replaced with a test suite, which is a massive code change."
+    },
+    {
+      "checklist_item": "Add inline comments documenting that readingTime is now included in all article responses",
+      "fulfilled": false,
+      "evidence": "No inline comments about readingTime inclusion exist in the diff. The file contains only test code with no documentation comments about the feature."
+    },
+    {
+      "checklist_item": "Verify that error handling paths do not bypass the mapper and potentially return incomplete article objects",
+      "fulfilled": false,
+      "evidence": "No actual error handling implementation exists to verify. Tests check error paths (e.g., lines +95-103) but these only verify mock behavior, not real mapper integration."
+    }
+  ],
+  "src/app/routes/article/article.mapper.ts": [
+    {
+      "checklist_item": "Locate the articleMapper function that accepts (article: any, id?: number) and returns the formatted article object",
+      "fulfilled": false,
+      "evidence": "The diff shows the original articleMapper implementation was removed (lines starting with '-') and replaced with test code. The actual implementation is imported at line 1: 'import articleMapper' but not defined in this file."
+    },
+    {
+      "checklist_item": "Create a helper function 'calculateReadingTime' that accepts article body text as a string parameter",
+      "fulfilled": false,
+      "evidence": "No standalone calculateReadingTime helper function is created in this diff. The diff only contains test code that mocks 'calculateReadingTime' as a method on article objects."
+    },
+    {
+      "checklist_item": "Inside calculateReadingTime: strip HTML tags and extra whitespace from the body text using regex or text processing",
+      "fulfilled": false,
+      "evidence": "No calculateReadingTime function implementation exists in this diff to contain HTML stripping logic."
+    },
+    {
+      "checklist_item": "Inside calculateReadingTime: split the cleaned text by whitespace to count words",
+      "fulfilled": false,
+      "evidence": "No calculateReadingTime function implementation exists in this diff to contain word counting logic."
+    },
+    {
+      "checklist_item": "Inside calculateReadingTime: apply the formula Math.ceil(wordCount / 200) to calculate reading time in minutes",
+      "fulfilled": false,
+      "evidence": "No calculateReadingTime function implementation exists in this diff to contain the Math.ceil(wordCount / 200) formula."
+    },
+    {
+      "checklist_item": "Inside calculateReadingTime: ensure the function returns a minimum value of 1 if the calculated value is less than 1 or if body is empty/null",
+      "fulfilled": false,
+      "evidence": "No calculateReadingTime function implementation exists in this diff to contain minimum value logic."
+    },
+    {
+      "checklist_item": "Inside calculateReadingTime: handle edge cases where article.body is undefined, null, or empty string by returning 1",
+      "fulfilled": false,
+      "evidence": "No calculateReadingTime function implementation exists in this diff to contain edge case handling."
+    },
+    {
+      "checklist_item": "In the articleMapper function's return object, add a new property 'readingTime: calculateReadingTime(article.body)'",
+      "fulfilled": false,
+      "evidence": "The articleMapper implementation was removed from this file. The diff shows the original implementation (lines 3-15) was deleted and replaced with test code."
+    },
+    {
+      "checklist_item": "Position the readingTime property in the returned object alongside other article metadata fields like createdAt, updatedAt, favoritesCount",
+      "fulfilled": false,
+      "evidence": "No articleMapper implementation exists in this diff to position the readingTime property."
+    },
+    {
+      "checklist_item": "MITIGATION: Ensure the readingTime field is always included in the response payload to maintain consistent API contract across ALL article endpoints (GET /api/articles/:slug, GET /api/articles, GET /api/articles/feed) without breaking existing API consumers",
+      "fulfilled": false,
+      "evidence": "This diff only contains test code. The actual implementation that would ensure readingTime is included in responses is not present in this file."
+    },
+    {
+      "checklist_item": "Verify that the calculateReadingTime function is pure and does not mutate the article object",
+      "fulfilled": false,
+      "evidence": "No calculateReadingTime function implementation exists in this diff to verify purity."
+    },
+    {
+      "checklist_item": "Test the word count logic with sample article bodies containing various lengths (empty, <200 words, >200 words, HTML content)",
+      "fulfilled": true,
+      "evidence": "Tests exist for readingTime with various scenarios: 'should handle calculateReadingTime returning zero' (line 186), 'should handle calculateReadingTime returning large values' (line 192), and tests for when calculateReadingTime does not exist with various readingTime values (lines 203-237)."
+    }
+  ],
+  "src/app/routes/article/article.model.ts": [
+    {
+      "checklist_item": "Locate the Article interface definition in the file",
+      "fulfilled": false,
+      "evidence": "The diff shows the entire file was replaced with test code (describe blocks). The original Article interface was removed (lines starting with '-'), and no Article interface exists in the new content."
+    },
+    {
+      "checklist_item": "Add a new optional property 'readingTime?: number' to the Article interface",
+      "fulfilled": false,
+      "evidence": "No Article interface exists in the diff. The file was converted from a model definition to a test file. No 'readingTime?: number' property was added to any interface."
+    },
+    {
+      "checklist_item": "Position the readingTime property logically near other metadata fields like createdAt or updatedAt",
+      "fulfilled": false,
+      "evidence": "No interface with properties exists in the new code. The file contains only test cases (describe/it blocks)."
+    },
+    {
+      "checklist_item": "MITIGATION: Ensure the readingTime property is marked as optional (using '?') to maintain backward compatibility with existing code that imports this interface, preventing breaking changes across the 3 downstream consumers (user.model.ts, comment.model.ts, and article-related operations)",
+      "fulfilled": false,
+      "evidence": "No readingTime property was added to any interface. The Article interface was completely removed and replaced with test code."
+    },
+    {
+      "checklist_item": "Verify that no existing property conflicts with the new readingTime field",
+      "fulfilled": false,
+      "evidence": "Cannot verify as no interface or readingTime property exists in the new code. The file is now a test file, not a model definition file."
+    },
+    {
+      "checklist_item": "Ensure TypeScript syntax is correct with proper typing (number type for readingTime)",
+      "fulfilled": false,
+      "evidence": "No readingTime property with number type was added to any interface. The diff shows test code only, with references to 'json.readingTime' in assertions but no interface definition."
+    }
+  ],
+  "src/app/routes/article/article.service.ts": [
+    {
+      "checklist_item": "Locate the getArticles function that retrieves paginated articles with query filters",
+      "fulfilled": false,
+      "evidence": "The diff shows the file was completely transformed from implementation code to test code. The original getArticles function implementation was removed (lines starting with '-') and replaced with test cases (lines starting with '+'). No implementation of getArticles exists in the new code."
+    },
+    {
+      "checklist_item": "Verify that the function already passes the complete article object (including body field) to articleMapper",
+      "fulfilled": false,
+      "evidence": "The diff removes the actual getArticles implementation. The new code only contains test mocks and assertions, not the actual service implementation that would pass article objects to articleMapper."
+    },
+    {
+      "checklist_item": "If the article body is not currently included in the Prisma query select clause, add 'body: true' to ensure the body field is fetched from the database",
+      "fulfilled": false,
+      "evidence": "The diff removes all Prisma query implementations. The new code only mocks Prisma calls with vi.mock() and does not contain actual Prisma query select clauses to modify."
+    },
+    {
+      "checklist_item": "Locate the getFeed function that fetches personalized article feed",
+      "fulfilled": false,
+      "evidence": "The original getFeed function implementation was removed (lines 79-136 with '-' prefix). The new code only contains test cases for getFeed, not the actual implementation."
+    },
+    {
+      "checklist_item": "Verify that getFeed also includes the article body field in its Prisma query select clause",
+      "fulfilled": false,
+      "evidence": "The getFeed implementation was deleted. The new code contains only test mocks: '(prisma.article.findMany as any).mockResolvedValue(mockArticles)' which does not show actual Prisma query structure."
+    },
+    {
+      "checklist_item": "If body is missing from the select clause in getFeed, add 'body: true' to the query",
+      "fulfilled": false,
+      "evidence": "No getFeed implementation exists in the new code to add 'body: true' to. The file was converted from service implementation to test file."
+    },
+    {
+      "checklist_item": "Locate any other functions that return article data (getArticle by slug, createArticle, updateArticle, favoriteArticle, unfavoriteArticle)",
+      "fulfilled": false,
+      "evidence": "All service function implementations (getArticle, createArticle, updateArticle, favoriteArticle, unfavoriteArticle) were removed from the file. The new code only imports them: 'import * as articleService from './article.service';' and tests them."
+    },
+    {
+      "checklist_item": "For each function that calls articleMapper, ensure the article object passed includes the body field",
+      "fulfilled": false,
+      "evidence": "No actual function implementations exist in the new code. The diff shows removal of all implementations (lines with '-' prefix showing 'return articleMapper(article, id)') and replacement with test code."
+    },
+    {
+      "checklist_item": "MITIGATION: Ensure all service functions that return article data maintain consistent payload structure by always including the body field, preventing inconsistent readingTime calculations across different endpoints and avoiding breaking changes for the 3 consumers (article.controller.ts, seed.ts, article.service.test.ts)",
+      "fulfilled": false,
+      "evidence": "The diff converts article.service.ts from implementation to test file. No service function implementations remain to ensure consistent payload structure. The file now only contains test cases that mock the service functions."
+    },
+    {
+      "checklist_item": "Verify that no service function filters out the body field before passing to articleMapper",
+      "fulfilled": false,
+      "evidence": "No service function implementations exist in the new code to verify. The file was completely rewritten as a test file with mocked dependencies."
+    },
+    {
+      "checklist_item": "Review Prisma query performance implications of always fetching the body field and add comments if needed for future optimization considerations",
+      "fulfilled": false,
+      "evidence": "No Prisma queries exist in the new code to review or comment on. All Prisma interactions are mocked: 'vi.mock('../../../prisma/prisma-client', () => ({...}))'"
+    }
+  ]
+}
