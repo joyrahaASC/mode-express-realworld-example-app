@@ -1,0 +1,44 @@
+{
+  "ripples": [
+    {
+      "is_broken": false,
+      "fix_suggestion": "No fix needed. The comment.model.ts file only imports and references the Article type for type definition purposes. It does not call the toJSONFor method or depend on the serialized JSON structure, so the addition of the readingTime field to the toJSONFor return value does not break this file.",
+      "target_file": "src/app/routes/article/comment.model.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No changes required. This file only handles author mapping and does not import or reference ArticleModel or call the toJSONFor method. The contract shift in ArticleModel.toJSONFor has no impact on this author mapper.",
+      "target_file": "src/app/routes/article/author.mapper.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No fix required. The file only imports and uses the Article type for type annotations (articles: Article[], favorites: Article[]). It does not invoke the toJSONFor() method, so the contract shift adding the readingTime field does not affect this file. The change is additive and backward compatible for type references.",
+      "target_file": "src/app/routes/auth/user.model.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No fix required. The routes.ts file only handles routing configuration and does not directly interact with ArticleModel.toJSONFor method or its response structure. The additive change (adding readingTime field) does not break this routing setup.",
+      "target_file": "src/app/routes/routes.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No changes required. The file src/main.ts is the application entry point that only handles Express configuration, middleware setup, and server initialization. It does not import or use ArticleModel or call the toJSONFor() method. The contract shift adding the readingTime field is transparent to this infrastructure layer.",
+      "target_file": "src/main.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No fix required. The contract shift adds a new 'readingTime' field to ArticleModel.toJSONFor() return value, which is an additive, backward-compatible change. The seed.ts file only uses the 'slug' property from created articles and does not directly call toJSONFor() or depend on the complete article response shape. All existing functionality remains intact.",
+      "target_file": "src/prisma/seed.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No changes required. This file does not import or reference ArticleModel.toJSONFor method. It only handles profile mapping logic and is unaffected by the contract shift in the Article model.",
+      "target_file": "src/app/routes/profile/profile.utils.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No changes required. This authentication service file does not import or use ArticleModel.toJSONFor method. The contract shift in the article model has no impact on user authentication functionality.",
+      "target_file": "src/app/routes/auth/auth.service.ts"
+    }
+  ]
+}
