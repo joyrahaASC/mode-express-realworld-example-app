@@ -1,0 +1,118 @@
+{
+  "missing_requirements": [
+    {
+      "file": "src/app/routes/article/article.mapper.ts",
+      "checklist_item": "Verify that this mapper function calls the article model's `toJSONFor(user)` method or accesses article properties directly",
+      "reason": "The diff only contains test code for the mapper functions. The actual implementation of articleMapper that would show property access or method calls has been removed (lines 3-16 show the old implementation being deleted with '-' prefix). No new implementation is visible in the diff.",
+      "severity": "HIGH (Tier 2 (Domain/Service))"
+    },
+    {
+      "file": "src/app/routes/article/article.mapper.ts",
+      "checklist_item": "If the mapper directly constructs the response object (not delegating to `toJSONFor`), add the `readingTime` property by calling `article.calculateReadingTime()` or accessing the computed property",
+      "reason": "The diff does not show the actual implementation code that adds readingTime property. Only test code is present that verifies the behavior: tests check `expect(result.readingTime).toBe(5)` and mock `calculateReadingTime: jest.fn().mockReturnValue(5)`, but the actual mapper implementation is not in this diff.",
+      "severity": "HIGH (Tier 2 (Domain/Service))"
+    },
+    {
+      "file": "src/app/routes/article/article.mapper.ts",
+      "checklist_item": "Ensure the `readingTime` field is included in the response object with the correct type annotation (`: number`) for TypeScript type safety",
+      "reason": "The diff does not contain the actual implementation code with type annotations. Only test code is present. The ArticleResponse interface is imported but not defined in this diff.",
+      "severity": "HIGH (Tier 2 (Domain/Service))"
+    },
+    {
+      "file": "src/app/routes/article/article.mapper.ts",
+      "checklist_item": "Verify that `mapArticleListToResponse` iterates through articles and applies the same mapping logic, ensuring `readingTime` is included for each article in the list",
+      "reason": "The diff only contains test code that verifies this behavior (e.g., line 368: `expect(result[0].readingTime).toBe(5);`), but does not show the actual implementation of mapArticleListToResponse that would demonstrate the iteration and mapping logic.",
+      "severity": "HIGH (Tier 2 (Domain/Service))"
+    },
+    {
+      "file": "src/app/routes/article/article.mapper.ts",
+      "checklist_item": "Add TypeScript interface or type definition updates if the mapper uses explicit response type definitions (e.g., `ArticleResponse` interface) to include `readingTime: number`",
+      "reason": "The diff shows ArticleResponse is imported at line 1: `import articleMapper, { mapArticleListToResponse, mapArticleToFeedResponse, ArticleResponse } from './article.mapper';` but the actual interface definition with readingTime: number is not present in this diff.",
+      "severity": "HIGH (Tier 2 (Domain/Service))"
+    },
+    {
+      "file": "src/tests/services/article.service.test.ts",
+      "checklist_item": "Update test snapshots or expected response schemas if the test suite uses snapshot testing or schema validation",
+      "reason": "No snapshot updates or schema validation changes are visible in the diff. This may not be applicable to this test file or may need to be done separately.",
+      "severity": "HIGH (Tier 4 (API/Entrypoint))"
+    },
+    {
+      "file": "src/app/routes/article/article.model.ts",
+      "checklist_item": "Locate the Article model class definition and identify the existing instance methods section",
+      "reason": "The diff shows the entire file was replaced with test code (describe blocks). No Article model class definition exists in the new code - only test imports and test suites.",
+      "severity": "HIGH (Tier 2 (Domain/Service))"
+    },
+    {
+      "file": "src/app/routes/article/article.model.ts",
+      "checklist_item": "Add a new private helper method `calculateReadingTime(): number` that implements the reading time calculation logic",
+      "reason": "No calculateReadingTime method is present in the diff. The diff only contains test code (describe/it blocks), not implementation code.",
+      "severity": "HIGH (Tier 2 (Domain/Service))"
+    },
+    {
+      "file": "src/app/routes/article/article.model.ts",
+      "checklist_item": "Inside `calculateReadingTime()`, check if `this.body` exists and is not null/undefined; if missing, return 1 as the minimum reading time",
+      "reason": "No calculateReadingTime implementation exists in the diff. Only test cases are present that verify this behavior.",
+      "severity": "HIGH (Tier 2 (Domain/Service))"
+    },
+    {
+      "file": "src/app/routes/article/article.model.ts",
+      "checklist_item": "Split `this.body` by whitespace using `.split(/\\s+/)` to get an array of words, then filter out empty strings to get accurate word count",
+      "reason": "No implementation code for splitting body text exists. The diff only contains test expectations, not actual implementation.",
+      "severity": "HIGH (Tier 2 (Domain/Service))"
+    },
+    {
+      "file": "src/app/routes/article/article.model.ts",
+      "checklist_item": "Calculate reading time using the formula: `Math.ceil(wordCount / 200)` where 200 is the assumed words per minute",
+      "reason": "No Math.ceil calculation is implemented in the diff. Only test cases verify expected reading times based on word counts.",
+      "severity": "HIGH (Tier 2 (Domain/Service))"
+    },
+    {
+      "file": "src/app/routes/article/article.model.ts",
+      "checklist_item": "Ensure the method returns a minimum value of 1 minute even if the calculated value is less than 1 (handle edge case of very short articles)",
+      "reason": "No method implementation exists. Tests verify this behavior (e.g., 'should return 1 minute for very short articles') but no actual code implements it.",
+      "severity": "HIGH (Tier 2 (Domain/Service))"
+    },
+    {
+      "file": "src/app/routes/article/article.model.ts",
+      "checklist_item": "Locate the existing `toJSONFor(user)` method or equivalent serialization method that transforms the Article instance to JSON",
+      "reason": "No toJSONFor method implementation is present in the diff. Only test code calling article.toJSONFor() exists.",
+      "severity": "HIGH (Tier 2 (Domain/Service))"
+    },
+    {
+      "file": "src/app/routes/article/article.model.ts",
+      "checklist_item": "Add a new property `readingTime` to the returned JSON object within `toJSONFor(user)`, assigning it the value from `this.calculateReadingTime()`",
+      "reason": "No toJSONFor implementation is shown. Tests verify readingTime property exists (e.g., 'expect(json.readingTime).toBe(1)') but no implementation adds it.",
+      "severity": "HIGH (Tier 2 (Domain/Service))"
+    },
+    {
+      "file": "src/app/routes/article/article.model.ts",
+      "checklist_item": "Verify the `readingTime` property is added at the appropriate position in the JSON structure, following existing field ordering conventions",
+      "reason": "No implementation code exists to verify property ordering. Only test assertions check for readingTime presence.",
+      "severity": "HIGH (Tier 2 (Domain/Service))"
+    },
+    {
+      "file": "src/app/routes/article/article.model.ts",
+      "checklist_item": "Add inline comments documenting the reading time calculation formula and assumptions (200 WPM, minimum 1 minute)",
+      "reason": "No inline comments or implementation code exists in the diff. The file contains only test code.",
+      "severity": "HIGH (Tier 2 (Domain/Service))"
+    },
+    {
+      "file": "src/app/routes/article/article.model.ts",
+      "checklist_item": "MITIGATION: Ensure the `calculateReadingTime()` method handles null, undefined, or empty `body` values gracefully without throwing exceptions to maintain backward compatibility",
+      "reason": "No calculateReadingTime method exists in the diff. Tests verify this behavior ('should not throw exception when body is null') but no implementation is present.",
+      "severity": "HIGH (Tier 2 (Domain/Service))"
+    },
+    {
+      "file": "src/app/routes/article/article.model.ts",
+      "checklist_item": "MITIGATION: Verify that adding `readingTime` to the JSON response does not break existing API consumers by ensuring it is added as a new optional field, not replacing any existing fields",
+      "reason": "No implementation code exists. Test 'should maintain backward compatibility with existing API consumers' verifies expected fields but no actual implementation is shown.",
+      "severity": "HIGH (Tier 2 (Domain/Service))"
+    },
+    {
+      "file": "src/app/routes/article/article.model.ts",
+      "checklist_item": "MITIGATION: Test that the serialization method still returns all existing fields (title, slug, description, body, tags, author, etc.) to prevent regression in downstream consumers expecting the full article schema",
+      "reason": "No implementation code exists. Test 'should return all existing fields in the JSON response' verifies this but the diff contains no actual toJSONFor implementation.",
+      "severity": "HIGH (Tier 2 (Domain/Service))"
+    }
+  ]
+}
