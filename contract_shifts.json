@@ -1,0 +1,10 @@
+{
+  "contract_shifts": [
+    {
+      "name": "ArticleModel.toJSONFor",
+      "old_signature": "toJSONFor(user?: any): { id, title, slug, description, body, tags, author, comments, favorited }",
+      "new_signature": "toJSONFor(user?: any): { id, title, slug, description, body, tags, author, comments, favorited, readingTime: number }",
+      "target_file": "src/app/routes/article/article.model.ts"
+    }
+  ]
+}
