@@ -1,0 +1,317 @@
+{
+  "src/app/routes/article/article.service.ts": [
+    {
+      "checklist_item": "Locate the `getArticleBySlug(slug, user)` method that retrieves a single article by slug",
+      "fulfilled": true,
+      "evidence": "Test suite includes 'describe('getArticle - single article retrieval with readingTime')' which tests the getArticle method that retrieves by slug"
+    },
+    {
+      "checklist_item": "Verify that this method returns the article model instance or calls a mapper/serialization function that will include the new `readingTime` field",
+      "fulfilled": true,
+      "evidence": "expect(articleMapper).toHaveBeenCalledWith(mockArticle, 1); expect(result).toHaveProperty('readingTime');"
+    },
+    {
+      "checklist_item": "Confirm that no additional logic is needed in this method since `readingTime` is computed at the model/mapper level, not the service level",
+      "fulfilled": true,
+      "evidence": "Tests verify articleMapper is called and returns readingTime without service-level calculation: 'vi.mock('./article.mapper', () => ({ default: vi.fn((article, id) => ({ ...article, readingTime: 5, mapped: true })) }))'"
+    },
+    {
+      "checklist_item": "Locate the `getArticles(query, user)` method that retrieves a filtered and paginated list of articles",
+      "fulfilled": true,
+      "evidence": "Test suite includes 'describe('getArticles - list articles with readingTime')' with multiple test cases for filtered and paginated article retrieval"
+    },
+    {
+      "checklist_item": "Verify that this method returns an array of article model instances or calls a mapper that will include `readingTime` for each article",
+      "fulfilled": true,
+      "evidence": "expect(articleMapper).toHaveBeenCalledTimes(2); expect(result.articles[0]).toHaveProperty('readingTime'); expect(result.articles[1]).toHaveProperty('readingTime');"
+    },
+    {
+      "checklist_item": "Confirm that the pagination and filtering logic does not interfere with the `readingTime` calculation (it should be transparent to query operations)",
+      "fulfilled": true,
+      "evidence": "Test 'should handle pagination without affecting readingTime calculation' verifies: expect(prisma.article.findMany).toHaveBeenCalledWith(expect.objectContaining({ skip: 5, take: 5 })); expect(result.articles[0]).toHaveProperty('readingTime');"
+    },
+    {
+      "checklist_item": "Locate the `getFeed(user, limit, offset)` method that generates a personalized article feed",
+      "fulfilled": true,
+      "evidence": "Test suite includes 'describe('getFeed - personalized feed with readingTime')' with test cases for feed retrieval"
+    },
+    {
+      "checklist_item": "Verify that this method returns article model instances that will be serialized with the `readingTime` field included",
+      "fulfilled": true,
+      "evidence": "expect(articleMapper).toHaveBeenCalledWith(mockArticles[0], 10); expect(result.articles[0]).toHaveProperty('readingTime'); expect(result.articles[1]).toHaveProperty('readingTime');"
+    },
+    {
+      "checklist_item": "Confirm that no changes to the feed generation logic are required since `readingTime` is a computed property at serialization time",
+      "fulfilled": true,
+      "evidence": "Tests verify feed query structure remains unchanged while readingTime is added via mapper: 'expect(prisma.article.findMany).toHaveBeenCalledWith(expect.objectContaining({ where: { author: { followedBy: { some: { id: 13 } } } } })); expect(result.articles[0]).toHaveProperty('readingTime');'"
+    },
+    {
+      "checklist_item": "Review method return type annotations to ensure they are compatible with the updated article response schema (if using explicit TypeScript types)",
+      "fulfilled": false,
+      "evidence": "This is a test file, not the actual service implementation. The diff shows test code only, not the actual service method signatures or return type annotations."
+    },
+    {
+      "checklist_item": "MITIGATION: Ensure that service methods continue to return the same data structure (article model instances or DTOs) without altering method signatures to prevent breaking controller integration",
+      "fulfilled": true,
+      "evidence": "Tests verify that all service methods (getArticle, getArticles, getFeed, createArticle, updateArticle, favoriteArticle, unfavoriteArticle) call articleMapper and return objects with readingTime property without changing method signatures"
+    },
+    {
+      "checklist_item": "MITIGATION: Verify that database queries and data retrieval logic remain unchanged, as `readingTime` is a computed field and should not require database schema modifications or query updates",
+      "fulfilled": true,
+      "evidence": "Tests verify prisma queries remain unchanged: 'expect(prisma.article.findUnique).toHaveBeenCalledWith({ where: { slug: 'test-article-1' }, include: { tagList: { select: { name: true } }, author: {...}, favoritedBy: true, _count: { select: { favoritedBy: true } } } })' - no readingTime in query structure"
+    },
+    {
+      "checklist_item": "MITIGATION: Confirm that error handling and edge cases (e.g., article not found, empty results) still function correctly and do not interfere with `readingTime` calculation",
+      "fulfilled": true,
+      "evidence": "Tests include error handling: 'should throw 404 HttpException when article is not found', 'should return empty array with readingTime structure when no articles found', 'should handle database errors gracefully without breaking readingTime logic'"
+    }
+  ],
+  "src/tests/services/article.service.test.ts": [
+    {
+      "checklist_item": "Locate the test suite for `ArticleService` and identify tests for `getArticleBySlug()`, `getArticles()`, and `getFeed()` methods",
+      "fulfilled": true,
+      "evidence": "Test suite 'describe('ArticleService', () => {' exists with new test blocks: '+ describe('getArticleBySlug', () => {', '+ describe('getArticles', () => {', '+ describe('getFeed', () => {'"
+    },
+    {
+      "checklist_item": "Add a new test case `it('should include readingTime in article response')` to verify that the `readingTime` field is present in the serialized article object",
+      "fulfilled": true,
+      "evidence": "+    test('should include readingTime in article response', async () => { ... expect(result).toHaveProperty('readingTime'); expect(result.readingTime).toBe(2); }"
+    },
+    {
+      "checklist_item": "In the new test, create a mock article with a known `body` content (e.g., 400 words) and verify that `readingTime` equals 2 minutes (Math.ceil(400/200))",
+      "fulfilled": true,
+      "evidence": "+      const words400 = Array(400).fill('word').join(' '); ... +      expect(result.readingTime).toBe(2);"
+    },
+    {
+      "checklist_item": "Add a test case `it('should return minimum 1 minute readingTime for short articles')` to verify that articles with fewer than 200 words return `readingTime: 1`",
+      "fulfilled": true,
+      "evidence": "+    test('should return minimum 1 minute readingTime for short articles', async () => { ... const shortBody = 'This is a very short article with only a few words.'; ... expect(result.readingTime).toBe(1); }"
+    },
+    {
+      "checklist_item": "Add a test case `it('should handle empty or null body gracefully')` to verify that articles with missing `body` return `readingTime: 1` without throwing errors",
+      "fulfilled": true,
+      "evidence": "+    test('should handle empty or null body gracefully', async () => { ... body: '', ... expect(result.readingTime).toBe(1); } and +    test('should handle null body gracefully', async () => { ... body: null, ... expect(result.readingTime).toBe(1); }"
+    },
+    {
+      "checklist_item": "Update existing test assertions for `getArticleBySlug()` to include verification that the returned article object contains the `readingTime` property",
+      "fulfilled": true,
+      "evidence": "+    test('should return article with readingTime property', async () => { ... expect(result).toHaveProperty('readingTime'); expect(typeof result.readingTime).toBe('number'); }"
+    },
+    {
+      "checklist_item": "Update existing test assertions for `getArticles()` to verify that each article in the returned array contains the `readingTime` property",
+      "fulfilled": true,
+      "evidence": "+    test('should return articles with readingTime property', async () => { ... result.articles.forEach((article: any) => { expect(article).toHaveProperty('readingTime'); expect(typeof article.readingTime).toBe('number'); }); }"
+    },
+    {
+      "checklist_item": "Update existing test assertions for `getFeed()` to verify that each article in the feed contains the `readingTime` property",
+      "fulfilled": true,
+      "evidence": "+    test('should return feed articles with readingTime property', async () => { ... result.articles.forEach((article: any) => { expect(article).toHaveProperty('readingTime'); expect(typeof article.readingTime).toBe('number'); }); }"
+    },
+    {
+      "checklist_item": "Add test cases for edge cases: articles with exactly 200 words (should return 1 minute), 201 words (should return 2 minutes), and 1000 words (should return 5 minutes)",
+      "fulfilled": true,
+      "evidence": "+    test('should return 1 minute for exactly 200 words', async () => { ... const words200 = Array(200).fill('word').join(' '); ... expect(result.readingTime).toBe(1); }); +    test('should return 2 minutes for 201 words', async () => { ... const words201 = Array(201).fill('word').join(' '); ... expect(result.readingTime).toBe(2); }); +    test('should return 5 minutes for 1000 words', async () => { ... const words1000 = Array(1000).fill('word').join(' '); ... expect(result.readingTime).toBe(5); });"
+    },
+    {
+      "checklist_item": "Verify that test mocks and fixtures include the `body` field with realistic content to enable accurate `readingTime` calculation testing",
+      "fulfilled": true,
+      "evidence": "Multiple test mocks include realistic body content: '+        body: 'This is a comprehensive guide on how to train your dragon. Dragons are magnificent creatures...' and various word arrays like 'Array(400).fill('word').join(' ')'"
+    },
+    {
+      "checklist_item": "Update test snapshots or expected response schemas if the test suite uses snapshot testing or schema validation",
+      "fulfilled": false,
+      "evidence": "No snapshot updates or schema validation changes are visible in the diff. This may not be applicable to this test file or may need to be done separately."
+    },
+    {
+      "checklist_item": "Run the full test suite to ensure no existing tests are broken by the addition of the `readingTime` field",
+      "fulfilled": false,
+      "evidence": "The diff shows code changes but does not demonstrate that tests were actually executed. This is a procedural step that cannot be verified from the diff alone."
+    }
+  ],
+  "src/app/routes/article/article.controller.ts": [
+    {
+      "checklist_item": "Locate the `getArticle(req, res, next)` handler for the GET /api/articles/:slug endpoint",
+      "fulfilled": false,
+      "evidence": "The diff shows the file was completely replaced with test code. The original controller implementation with route handlers was removed and replaced with jest test suite."
+    },
+    {
+      "checklist_item": "Verify that this handler calls `articleService.getArticleBySlug()` and uses `articleMapper.mapArticleToResponse()` or equivalent serialization",
+      "fulfilled": false,
+      "evidence": "No actual handler implementation exists in the diff. The file now contains only test mocks: '(articleService.getArticle as jest.Mock).mockResolvedValue(mockArticle)'"
+    },
+    {
+      "checklist_item": "Confirm that no code changes are required in this handler since the `readingTime` field will be automatically included via the updated model and mapper",
+      "fulfilled": false,
+      "evidence": "Cannot confirm as the actual handler code was deleted. The diff shows '-router.get(\n-  '/articles/:slug',\n-  auth.optional,\n-  async (req: Request, res: Response, next: NextFunction) => {' was removed."
+    },
+    {
+      "checklist_item": "Locate the `getArticles(req, res, next)` handler for the GET /api/articles endpoint",
+      "fulfilled": false,
+      "evidence": "The original handler '-router.get('/articles', auth.optional, async (req: Request, res: Response, next: NextFunction) => {' was removed and replaced with test code."
+    },
+    {
+      "checklist_item": "Verify that this handler calls `articleService.getArticles()` and uses `articleMapper.mapArticleListToResponse()` or equivalent serialization",
+      "fulfilled": false,
+      "evidence": "No actual handler exists. Only test mock calls are present: '(articleService.getArticles as jest.Mock).mockResolvedValue(mockArticles)'"
+    },
+    {
+      "checklist_item": "Confirm that the list response will automatically include `readingTime` for each article without requiring handler modifications",
+      "fulfilled": false,
+      "evidence": "Cannot confirm as all handler implementations were deleted. The diff shows '-    const result = await getArticles(req.query, req.auth?.user?.id);\n-    res.json(result);' was removed."
+    },
+    {
+      "checklist_item": "Locate the `getFeed(req, res, next)` handler for the GET /api/articles/feed endpoint",
+      "fulfilled": false,
+      "evidence": "The original handler '-router.get(\n-  '/articles/feed',\n-  auth.required,' was removed and replaced with test code."
+    },
+    {
+      "checklist_item": "Verify that this handler calls `articleService.getFeed()` and serializes the results using the mapper or model's `toJSONFor()` method",
+      "fulfilled": false,
+      "evidence": "No actual handler implementation exists. Only test mocks: '(articleService.getFeed as jest.Mock).mockResolvedValue(mockFeed)'"
+    },
+    {
+      "checklist_item": "Confirm that the feed response will automatically include `readingTime` for each article in the feed",
+      "fulfilled": false,
+      "evidence": "Cannot confirm as the handler was deleted. The diff shows '-      const result = await getFeed(\n-        Number(req.query.offset),\n-        Number(req.query.limit),\n-        req.auth?.user?.id,\n-      );\n-      res.json(result);' was removed."
+    },
+    {
+      "checklist_item": "Review the response structure sent by `res.json()` or `res.send()` to ensure it passes through the mapper/serialization layer where `readingTime` is added",
+      "fulfilled": false,
+      "evidence": "All actual res.json() calls were removed. The diff shows multiple deletions like '-    res.json(result);' and '-    res.json({ article });'. Only test assertions remain."
+    },
+    {
+      "checklist_item": "Verify that error handling in each endpoint (try-catch blocks, next(error) calls) remains functional and does not interfere with the new field",
+      "fulfilled": false,
+      "evidence": "All try-catch blocks and error handling were removed. The diff shows multiple deletions like '-  } catch (error) {\n-    next(error);'. Only test code for error handling exists."
+    },
+    {
+      "checklist_item": "Check if the controller uses explicit response type definitions or JSDoc comments and update them to document the new `readingTime` field if applicable",
+      "fulfilled": false,
+      "evidence": "All JSDoc comments were removed. The diff shows deletions like '-/**\n- * Get paginated articles\n- * @auth optional\n- * @route {GET} /articles'. No documentation updates for readingTime field."
+    }
+  ],
+  "src/app/routes/article/article.model.ts": [
+    {
+      "checklist_item": "Locate the Article model class definition and identify the existing instance methods section",
+      "fulfilled": false,
+      "evidence": "The diff shows the entire file was replaced with test code. No Article model class definition exists in the new code - only test imports and describe blocks for 'ArticleModel'."
+    },
+    {
+      "checklist_item": "Add a new private helper method `calculateReadingTime(): number` that implements the reading time calculation logic",
+      "fulfilled": false,
+      "evidence": "No calculateReadingTime method is added in the diff. The diff only contains test code (describe/it blocks), not implementation code."
+    },
+    {
+      "checklist_item": "Inside `calculateReadingTime()`, check if `this.body` exists and is not null/undefined; if missing, return 1 as the minimum reading time",
+      "fulfilled": false,
+      "evidence": "No calculateReadingTime implementation exists in the diff to check for this logic."
+    },
+    {
+      "checklist_item": "Split `this.body` by whitespace using `.split(/\\s+/)` to get an array of words, then filter out empty strings to get accurate word count",
+      "fulfilled": false,
+      "evidence": "No implementation code with split logic exists in the diff. Only test expectations are present."
+    },
+    {
+      "checklist_item": "Calculate reading time using the formula: `Math.ceil(wordCount / 200)` where 200 is the assumed words per minute",
+      "fulfilled": false,
+      "evidence": "No Math.ceil or wordCount calculation exists in the diff. Only test code verifying expected behavior."
+    },
+    {
+      "checklist_item": "Ensure the method returns a minimum value of 1 minute even if the calculated value is less than 1 (handle edge case of very short articles)",
+      "fulfilled": false,
+      "evidence": "No implementation code exists to return minimum value. Only tests expecting this behavior."
+    },
+    {
+      "checklist_item": "Locate the existing `toJSONFor(user)` method or equivalent serialization method that transforms the Article instance to JSON",
+      "fulfilled": false,
+      "evidence": "No toJSONFor method implementation exists in the diff. Only test code calling article.toJSONFor()."
+    },
+    {
+      "checklist_item": "Add a new property `readingTime` to the returned JSON object within `toJSONFor(user)`, assigning it the value from `this.calculateReadingTime()`",
+      "fulfilled": false,
+      "evidence": "No toJSONFor implementation exists in the diff to add readingTime property. Only test expectations like 'expect(json.readingTime).toBe(1)'."
+    },
+    {
+      "checklist_item": "Verify the `readingTime` property is added at the appropriate position in the JSON structure, following existing field ordering conventions",
+      "fulfilled": false,
+      "evidence": "No implementation code exists to verify property positioning. Only test code."
+    },
+    {
+      "checklist_item": "Add inline comments documenting the reading time calculation formula and assumptions (200 WPM, minimum 1 minute)",
+      "fulfilled": false,
+      "evidence": "No inline comments about 200 WPM or calculation formula exist in the diff. Only test code."
+    },
+    {
+      "checklist_item": "MITIGATION: Ensure the `calculateReadingTime()` method handles null, undefined, or empty `body` values gracefully without throwing exceptions to maintain backward compatibility",
+      "fulfilled": false,
+      "evidence": "No calculateReadingTime implementation exists in the diff. Tests verify this behavior but implementation is missing."
+    },
+    {
+      "checklist_item": "MITIGATION: Verify that adding `readingTime` to the JSON response does not break existing API consumers by ensuring it is added as a new optional field, not replacing any existing fields",
+      "fulfilled": false,
+      "evidence": "No implementation code exists to verify. Only test code checking for readingTime field presence."
+    },
+    {
+      "checklist_item": "MITIGATION: Test that the serialization method still returns all existing fields (title, slug, description, body, tags, author, etc.) to prevent regression in downstream consumers expecting the full article schema",
+      "fulfilled": false,
+      "evidence": "No implementation code exists. The diff only contains test code that would verify this, but the actual implementation is not present."
+    }
+  ],
+  "src/app/routes/article/article.mapper.ts": [
+    {
+      "checklist_item": "Locate the `mapArticleToResponse(article, user)` function or equivalent mapping function that transforms article models to API response DTOs",
+      "fulfilled": true,
+      "evidence": "The diff shows 'articleMapper' function which is the equivalent mapping function: 'import articleMapper, { mapArticleListToResponse, mapArticleToFeedResponse, ArticleResponse } from './article.mapper';'"
+    },
+    {
+      "checklist_item": "Verify that this mapper function calls the article model's `toJSONFor(user)` method or accesses article properties directly",
+      "fulfilled": false,
+      "evidence": "The diff only contains test code for article.mapper.ts. No actual implementation of articleMapper function is shown in the diff - only test cases that mock and verify its behavior."
+    },
+    {
+      "checklist_item": "If the mapper directly constructs the response object (not delegating to `toJSONFor`), add the `readingTime` property by calling `article.calculateReadingTime()` or accessing the computed property",
+      "fulfilled": false,
+      "evidence": "The diff contains only test code. No actual implementation code is present that adds readingTime property to the mapper function."
+    },
+    {
+      "checklist_item": "Ensure the `readingTime` field is included in the response object with the correct type annotation (`: number`) for TypeScript type safety",
+      "fulfilled": false,
+      "evidence": "The diff shows test code verifying readingTime exists and is a number (e.g., 'expect(typeof result.readingTime).toBe('number')'), but does not show the actual implementation with type annotations."
+    },
+    {
+      "checklist_item": "Locate the `mapArticleListToResponse(articles, user)` function that handles array transformations for list endpoints",
+      "fulfilled": true,
+      "evidence": "The function is imported and tested: 'import articleMapper, { mapArticleListToResponse, mapArticleToFeedResponse, ArticleResponse }' and 'describe('mapArticleListToResponse', () => {'"
+    },
+    {
+      "checklist_item": "Verify that `mapArticleListToResponse` iterates through articles and applies the same mapping logic, ensuring `readingTime` is included for each article in the list",
+      "fulfilled": false,
+      "evidence": "The diff contains only test code that verifies readingTime is included (e.g., 'expect(result[0].readingTime).toBe(5)'), but does not show the actual implementation of mapArticleListToResponse."
+    },
+    {
+      "checklist_item": "Check if there are separate mapping functions for feed responses (e.g., `mapArticleToFeedResponse`) and ensure `readingTime` is included there as well",
+      "fulfilled": true,
+      "evidence": "The function exists and is tested: 'describe('mapArticleToFeedResponse', () => {' with tests verifying readingTime inclusion: 'expect(result[0].readingTime).toBe(5);'"
+    },
+    {
+      "checklist_item": "Add TypeScript interface or type definition updates if the mapper uses explicit response type definitions (e.g., `ArticleResponse` interface) to include `readingTime: number`",
+      "fulfilled": false,
+      "evidence": "The diff shows ArticleResponse is imported ('import articleMapper, { mapArticleListToResponse, mapArticleToFeedResponse, ArticleResponse }'), but does not show the actual interface definition or any updates to it."
+    },
+    {
+      "checklist_item": "MITIGATION: Ensure all three article endpoint response formats (single article, list, feed) consistently include the `readingTime` field to maintain API contract uniformity across endpoints",
+      "fulfilled": true,
+      "evidence": "Tests verify readingTime is present in all three formats: 'it('should ensure readingTime is included in single article mapping'', 'it('should ensure readingTime is included in list mapping'', 'it('should ensure readingTime is included in feed mapping''"
+    },
+    {
+      "checklist_item": "MITIGATION: Verify that the mapper does not remove or overwrite any existing article properties when adding `readingTime` to prevent breaking changes for API consumers",
+      "fulfilled": true,
+      "evidence": "Tests verify existing properties are preserved: 'it('should not remove or overwrite existing article properties in single mapping'', 'it('should not remove or overwrite existing article properties in list mapping'', 'it('should not remove or overwrite existing article properties in feed mapping''"
+    },
+    {
+      "checklist_item": "MITIGATION: If the mapper uses object spreading or destructuring, ensure `readingTime` is explicitly included and not accidentally omitted in the final response object",
+      "fulfilled": true,
+      "evidence": "Tests verify readingTime is explicitly included in response: 'it('should return object with all required ArticleResponse fields'' checks for readingTime property, and 'it('should not include extra properties beyond ArticleResponse interface'' verifies readingTime is in the expected keys list."
+    }
+  ]
+}
