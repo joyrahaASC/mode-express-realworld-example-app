@@ -1,0 +1,44 @@
+{
+  "ripples": [
+    {
+      "is_broken": false,
+      "fix_suggestion": "No fix needed. The downstream file only uses type references to Article and Comment interfaces, and there are no contract shifts reported that would break this usage.",
+      "target_file": "src/app/routes/auth/user.model.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No changes required. The readingTime calculation change in article.model.ts is an internal implementation detail that does not affect the createArticle() function signature or usage in this seed file.",
+      "target_file": "src/prisma/seed.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No fixes required. The downstream file does not break as there are no contract shifts affecting it.",
+      "target_file": "src/app/routes/article/author.mapper.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No fixes needed. The contract_shifts array is empty, indicating no breaking changes to any imported contracts. The downstream file continues to function correctly with its current imports and usage of tagsController, articlesController, profileController, and authController.",
+      "target_file": "src/app/routes/routes.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No fixes required. The downstream file does not break as there are no contract shifts reported in the current changes.",
+      "target_file": "src/app/routes/profile/profile.utils.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No changes required. The Comment interface only uses Article as a type reference for an optional property. The internal readingTime calculation changes in article.model.ts do not affect the Article type signature or interface structure.",
+      "target_file": "src/app/routes/article/comment.model.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No contract shifts detected. The downstream file does not require any updates.",
+      "target_file": "src/app/routes/auth/auth.service.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No changes required. The controller file does not break as there are no contract shifts detected. The bug fix relates to readingTime calculation in the model layer, which does not affect the controller's routing logic or service function calls.",
+      "target_file": "src/app/routes/article/article.controller.ts"
+    }
+  ]
+}
