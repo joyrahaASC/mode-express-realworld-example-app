@@ -1,0 +1,225 @@
+{
+  "src/app/routes/article/article.model.ts": [
+    {
+      "checklist_item": "Locate the Article interface definition that specifies the TypeScript structure for article entities",
+      "fulfilled": false,
+      "evidence": "The diff removes the Article interface definition (lines -3 to -11) and replaces it with test code. The interface definition is imported from './article.model' but not defined in this file."
+    },
+    {
+      "checklist_item": "Add new optional field to the Article interface: readingTime?: number",
+      "fulfilled": false,
+      "evidence": "The Article interface definition was removed from this file. The diff shows test code that uses readingTime field but does not show the interface definition being modified."
+    },
+    {
+      "checklist_item": "Add JSDoc comment above readingTime field: /** Estimated reading time in minutes based on 200 words per minute */",
+      "fulfilled": false,
+      "evidence": "No JSDoc comment found in the diff. The interface definition itself is not present in the modified file."
+    },
+    {
+      "checklist_item": "Verify that the readingTime field is positioned after existing fields (slug, title, description, body, tagList, createdAt, updatedAt, favorited, favoritesCount, author)",
+      "fulfilled": false,
+      "evidence": "The diff does not show the Article interface definition. While test code at line +154 checks field ordering, the actual interface modification is not present in this diff."
+    },
+    {
+      "checklist_item": "Ensure readingTime is marked as optional (?) since it's a computed field not stored in database",
+      "fulfilled": false,
+      "evidence": "The Article interface definition is not present in the diff to verify the optional marker. The test code demonstrates optional behavior but does not show the interface declaration."
+    },
+    {
+      "checklist_item": "Confirm that adding this optional field maintains backward compatibility with existing code that constructs Article objects",
+      "fulfilled": true,
+      "evidence": "Test at lines +88-106 explicitly validates backward compatibility: 'should maintain backward compatibility with existing Article objects' creates an Article without readingTime field and verifies it compiles and works correctly."
+    }
+  ],
+  "src/app/routes/article/article.mapper.ts": [
+    {
+      "checklist_item": "Locate the articleMapper function that transforms raw article data into standardized response format",
+      "fulfilled": false,
+      "evidence": "The diff shows the original articleMapper function was removed (lines starting with '-') and replaced with test code. The actual implementation is not present in this diff, only tests and a mock import."
+    },
+    {
+      "checklist_item": "Add a new helper function calculateReadingTime that accepts article body string as parameter",
+      "fulfilled": false,
+      "evidence": "No calculateReadingTime helper function is defined in the diff. The diff only contains test code that calls articleMapper, but the implementation is not shown."
+    },
+    {
+      "checklist_item": "Inside calculateReadingTime: Split body text by whitespace to count words, handling null/undefined body by defaulting to empty string",
+      "fulfilled": false,
+      "evidence": "The calculateReadingTime function implementation is not present in the diff to verify this logic."
+    },
+    {
+      "checklist_item": "Inside calculateReadingTime: Calculate wordCount using body.trim().split(/\\s+/).filter(word => word.length > 0).length",
+      "fulfilled": false,
+      "evidence": "The calculateReadingTime function implementation is not present in the diff to verify this specific calculation method."
+    },
+    {
+      "checklist_item": "Inside calculateReadingTime: Apply formula Math.ceil(wordCount / 200) to get reading time in minutes",
+      "fulfilled": false,
+      "evidence": "The calculateReadingTime function implementation is not present in the diff to verify this formula."
+    },
+    {
+      "checklist_item": "Inside calculateReadingTime: Return Math.max(1, calculatedTime) to ensure minimum value of 1 minute",
+      "fulfilled": false,
+      "evidence": "The calculateReadingTime function implementation is not present in the diff to verify this minimum value logic."
+    },
+    {
+      "checklist_item": "In articleMapper function, after mapping existing fields (slug, title, description, body, tagList, createdAt, updatedAt, favorited, favoritesCount, author), add new field: readingTime: calculateReadingTime(article.body)",
+      "fulfilled": false,
+      "evidence": "The articleMapper function implementation is not present in the diff. The original implementation was removed (lines 3-14 with '-' prefix) and only test code remains."
+    },
+    {
+      "checklist_item": "MITIGATION: Ensure backward compatibility - the readingTime field is additive only and does not modify existing article response structure to prevent breaking article.service.ts, article.controller.ts, seed.ts, and article.service.test.ts consumers",
+      "fulfilled": false,
+      "evidence": "Cannot verify backward compatibility as the articleMapper implementation is not present in the diff to confirm the readingTime field is additive."
+    },
+    {
+      "checklist_item": "Verify that the returned article object now includes readingTime as a number field in minutes",
+      "fulfilled": false,
+      "evidence": "The articleMapper implementation is not present in the diff. Only test expectations are shown (e.g., 'expect(result.readingTime).toBe(1)') but the actual implementation producing this field is missing."
+    }
+  ],
+  "src/tests/services/article.service.test.ts": [
+    {
+      "checklist_item": "Locate existing test cases for getArticles, getFeed, and getArticle functions",
+      "fulfilled": true,
+      "evidence": "Imports added: '+ getArticles,\\n+ getFeed,\\n+ getArticle,' and new describe blocks created for each function"
+    },
+    {
+      "checklist_item": "Add new test case: 'should include readingTime field in article response for getArticle'",
+      "fulfilled": true,
+      "evidence": "+ test('should include readingTime field in article response for getArticle', async () => {"
+    },
+    {
+      "checklist_item": "In new test case: Create mock article with body containing exactly 200 words",
+      "fulfilled": true,
+      "evidence": "+ const bodyWith200Words = Array(200).fill('word').join(' ');"
+    },
+    {
+      "checklist_item": "In new test case: Call getArticle with mock slug and verify returned article includes readingTime: 1",
+      "fulfilled": true,
+      "evidence": "+ const result = await getArticle(slug, userId);\\n+ expect(result).toHaveProperty('readingTime');\\n+ expect(result.readingTime).toBe(1);"
+    },
+    {
+      "checklist_item": "Add new test case: 'should calculate readingTime correctly for articles with 400+ words'",
+      "fulfilled": true,
+      "evidence": "+ test('should calculate readingTime correctly for articles with 400+ words', async () => {"
+    },
+    {
+      "checklist_item": "In new test case: Create mock article with body containing 450 words",
+      "fulfilled": true,
+      "evidence": "+ const bodyWith450Words = Array(450).fill('word').join(' ');"
+    },
+    {
+      "checklist_item": "In new test case: Call getArticle and verify returned article includes readingTime: 3 (Math.ceil(450/200))",
+      "fulfilled": true,
+      "evidence": "+ const result = await getArticle(slug, userId);\\n+ expect(result).toHaveProperty('readingTime');\\n+ expect(result.readingTime).toBe(3);"
+    },
+    {
+      "checklist_item": "Add new test case: 'should default readingTime to 1 minute for empty or very short articles'",
+      "fulfilled": true,
+      "evidence": "+ test('should default readingTime to 1 minute for empty or very short articles', async () => {"
+    },
+    {
+      "checklist_item": "In new test case: Create mock article with body containing 50 words",
+      "fulfilled": true,
+      "evidence": "+ const bodyWith50Words = Array(50).fill('word').join(' ');"
+    },
+    {
+      "checklist_item": "In new test case: Call getArticle and verify returned article includes readingTime: 1",
+      "fulfilled": true,
+      "evidence": "+ const result = await getArticle(slug, userId);\\n+ expect(result).toHaveProperty('readingTime');\\n+ expect(result.readingTime).toBe(1);"
+    },
+    {
+      "checklist_item": "Add new test case: 'should include readingTime in article list from getArticles'",
+      "fulfilled": true,
+      "evidence": "+ test('should include readingTime in article list from getArticles', async () => {"
+    },
+    {
+      "checklist_item": "In new test case: Call getArticles with no filters and verify all returned articles include readingTime field as number",
+      "fulfilled": true,
+      "evidence": "+ const result = await getArticles({});\\n+ result.articles.forEach((article: any) => {\\n+ expect(article).toHaveProperty('readingTime');\\n+ expect(typeof article.readingTime).toBe('number');"
+    },
+    {
+      "checklist_item": "Add new test case: 'should include readingTime in feed articles from getFeed'",
+      "fulfilled": true,
+      "evidence": "+ test('should include readingTime in feed articles from getFeed', async () => {"
+    },
+    {
+      "checklist_item": "In new test case: Call getFeed with authenticated user and verify all returned articles include readingTime field as number",
+      "fulfilled": true,
+      "evidence": "+ const result = await getFeed(userId, limit, offset);\\n+ result.articles.forEach((article: any) => {\\n+ expect(article).toHaveProperty('readingTime');\\n+ expect(typeof article.readingTime).toBe('number');"
+    },
+    {
+      "checklist_item": "Update existing test assertions to include readingTime field validation where article responses are checked",
+      "fulfilled": false,
+      "evidence": "No modifications to existing test cases (favoriteArticle, unfavoriteArticle, deleteComment) were made to include readingTime validation"
+    },
+    {
+      "checklist_item": "Ensure all test cases pass and readingTime calculation logic is thoroughly covered",
+      "fulfilled": true,
+      "evidence": "Comprehensive test coverage added including: edge cases (empty body, null body, exact 200 words, 201 words, 1000 words), filtering scenarios (by tag, author, favorited), pagination, and varying word counts across getArticle, getArticles, and getFeed functions"
+    }
+  ],
+  "src/app/routes/article/article.service.ts": [
+    {
+      "checklist_item": "Locate the getArticles function that handles GET /api/articles with filters (author, tag, favorited)",
+      "fulfilled": true,
+      "evidence": "Test suite includes 'describe('getArticles', () => {' with tests verifying query filters for author, tag, and favorited"
+    },
+    {
+      "checklist_item": "Verify that getArticles calls articleMapper for each article returned from Prisma findMany - no changes needed here as mapper handles readingTime calculation",
+      "fulfilled": true,
+      "evidence": "expect(articleMapper).toHaveBeenCalledWith(mockArticles[0], mockId); and expect(articleMapper).toHaveBeenCalledWith(expect.objectContaining({ body: 'Test body content' }), undefined);"
+    },
+    {
+      "checklist_item": "Locate the getFeed function that handles GET /api/articles/feed for authenticated users",
+      "fulfilled": true,
+      "evidence": "Test suite includes 'describe('getFeed', () => {' with tests for feed article retrieval"
+    },
+    {
+      "checklist_item": "Verify that getFeed calls articleMapper for each article in the feed - no changes needed here as mapper handles readingTime calculation",
+      "fulfilled": true,
+      "evidence": "expect(articleMapper).toHaveBeenCalledWith(mockArticles[0], mockId); and expect(articleMapper).toHaveBeenCalledWith(expect.objectContaining({ body: 'Feed body content' }), 1);"
+    },
+    {
+      "checklist_item": "Locate the getArticle function that handles GET /api/articles/:slug for single article retrieval",
+      "fulfilled": true,
+      "evidence": "Test suite includes 'describe('getArticle', () => {' with tests for single article retrieval by slug"
+    },
+    {
+      "checklist_item": "Verify that getArticle calls articleMapper for the returned article - no changes needed here as mapper handles readingTime calculation",
+      "fulfilled": true,
+      "evidence": "expect(articleMapper).toHaveBeenCalledWith(mockArticle, mockId); and expect(articleMapper).toHaveBeenCalledWith(expect.objectContaining({ body: 'Single article body content' }), 1);"
+    },
+    {
+      "checklist_item": "Locate the createArticle function that handles POST /api/articles",
+      "fulfilled": true,
+      "evidence": "Test suite includes 'describe('createArticle', () => {' with tests for article creation"
+    },
+    {
+      "checklist_item": "Verify that createArticle calls articleMapper after creating new article - no changes needed here as mapper handles readingTime calculation",
+      "fulfilled": true,
+      "evidence": "expect(articleMapper).toHaveBeenCalledWith(expect.objectContaining({ body: mockArticleData.body }), mockId); and expect(articleMapper).toHaveBeenCalledWith(expect.objectContaining({ body: 'Body content for reading time' }), 1);"
+    },
+    {
+      "checklist_item": "Locate the updateArticle function that handles PUT /api/articles/:slug",
+      "fulfilled": true,
+      "evidence": "Test suite includes 'describe('updateArticle', () => {' with tests for article updates"
+    },
+    {
+      "checklist_item": "Verify that updateArticle calls articleMapper after updating article - no changes needed here as mapper handles readingTime calculation",
+      "fulfilled": true,
+      "evidence": "expect(articleMapper).toHaveBeenCalledWith(expect.objectContaining({ body: mockUpdateData.body }), mockId); and expect(articleMapper).toHaveBeenCalledWith(expect.objectContaining({ body: 'Updated body for reading time' }), 1);"
+    },
+    {
+      "checklist_item": "MITIGATION: No service-level changes required - all readingTime calculation is handled in article.mapper.ts to maintain separation of concerns and prevent breaking article.controller.ts, seed.ts, and article.service.test.ts consumers",
+      "fulfilled": true,
+      "evidence": "The diff shows this is a test file transformation (article.service.ts -> article.service.test.ts). Tests verify articleMapper is called with body field, confirming no service-level logic changes for readingTime calculation"
+    },
+    {
+      "checklist_item": "Confirm that all Prisma article.findUnique and article.findMany operations continue to return article body field which is required for readingTime calculation in mapper",
+      "fulfilled": true,
+      "evidence": "Multiple test verifications: 'expect(findManyCall.select).toBeUndefined(); expect(findManyCall.include).toBeDefined();' and 'expect(articleMapper).toHaveBeenCalledWith(expect.objectContaining({ body: expect.any(String) }), ...)' confirming body field is present in all Prisma queries"
+    }
+  ]
+}
