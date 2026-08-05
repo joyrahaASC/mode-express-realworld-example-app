@@ -1,0 +1,44 @@
+{
+  "ripples": [
+    {
+      "is_broken": false,
+      "fix_suggestion": "No fix needed. The Comment interface only uses Article as a type reference, and no contract shifts were detected in article.model.ts that would affect the Article type definition.",
+      "target_file": "src/app/routes/article/comment.model.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No fixes required. The downstream file does not break as there are no contract shifts detected in the dependencies it consumes (createUser, createArticle, addComment).",
+      "target_file": "src/prisma/seed.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No changes required. The User model only references the Article and Comment types in its interface definition. Since no contract shifts were detected in the imported models, this file remains compatible and does not break.",
+      "target_file": "src/app/routes/auth/user.model.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No fix needed. The downstream file src/app/routes/routes.ts is not affected by any contract shifts. It only imports and uses controllers for routing setup, and no contract changes were detected in the contract_shifts_results.",
+      "target_file": "src/app/routes/routes.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No contract shifts detected. The downstream file author.mapper.ts does not require any changes as there are no broken contracts affecting it.",
+      "target_file": "src/app/routes/article/author.mapper.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No fix needed. There are no contract shifts detected that affect this file. The file's imports and usage of User and Profile models remain valid.",
+      "target_file": "src/app/routes/profile/profile.utils.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No contract shifts detected. The downstream file src/app/routes/auth/auth.service.ts does not break as there are no modified contracts affecting its imports or function calls.",
+      "target_file": "src/app/routes/auth/auth.service.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No fix needed. The downstream file article.controller.ts imports from article.service and does not directly depend on the article.model.ts changes. The readingTime calculation is an internal model concern that does not affect the controller's API calls to the service layer.",
+      "target_file": "src/app/routes/article/article.controller.ts"
+    }
+  ]
+}
