@@ -1,0 +1,79 @@
+{
+  "src/app/routes/article/article.model.ts": [
+    {
+      "checklist_item": "Add test case to verify that readingTime calculation follows the formula Math.ceil(wordCount / 200) with a minimum value of 1 minute when body text is present",
+      "fulfilled": false,
+      "evidence": "No test case found that explicitly verifies the Math.ceil(wordCount / 200) formula. Tests only verify that readingTime can be set to specific values (5, 0, 3.5, 8, 500) but do not test the calculation logic itself."
+    },
+    {
+      "checklist_item": "Add test case to verify that readingTime is 1 minute when article body contains fewer than 200 words (e.g., body with 50 words should return readingTime: 1)",
+      "fulfilled": false,
+      "evidence": "No test case found that creates an article with a body containing fewer than 200 words and verifies readingTime equals 1. Tests only assign hardcoded readingTime values."
+    },
+    {
+      "checklist_item": "Add test case to verify that readingTime is calculated correctly for exactly 200 words (should return readingTime: 1)",
+      "fulfilled": false,
+      "evidence": "No test case found that creates an article body with exactly 200 words and verifies the calculated readingTime."
+    },
+    {
+      "checklist_item": "Add test case to verify that readingTime is calculated correctly for 201 words (should return readingTime: 2 due to Math.ceil)",
+      "fulfilled": false,
+      "evidence": "No test case found that creates an article body with 201 words and verifies readingTime equals 2."
+    },
+    {
+      "checklist_item": "Add test case to verify that readingTime is calculated correctly for 400 words (should return readingTime: 2)",
+      "fulfilled": false,
+      "evidence": "No test case found that creates an article body with 400 words and verifies readingTime equals 2."
+    },
+    {
+      "checklist_item": "Add test case to verify that readingTime is calculated correctly for 401 words (should return readingTime: 3 due to Math.ceil)",
+      "fulfilled": false,
+      "evidence": "No test case found that creates an article body with 401 words and verifies readingTime equals 3."
+    },
+    {
+      "checklist_item": "Add test case to verify that readingTime defaults to 1 when article body is an empty string",
+      "fulfilled": false,
+      "evidence": "No test case found that creates an article with an empty string body and verifies readingTime defaults to 1."
+    },
+    {
+      "checklist_item": "Add test case to verify that readingTime defaults to 1 when article body contains only whitespace characters",
+      "fulfilled": false,
+      "evidence": "No test case found that creates an article with a whitespace-only body and verifies readingTime defaults to 1."
+    },
+    {
+      "checklist_item": "Remove or update the test case 'should allow Article object with readingTime field set to zero' as per acceptance criteria readingTime should have a minimum value of 1 when text is present",
+      "fulfilled": false,
+      "evidence": "Test case 'should allow Article object with readingTime field set to zero' is still present in the diff at lines +48-62 with readingTime: 0, which contradicts the minimum value of 1 requirement."
+    },
+    {
+      "checklist_item": "Remove or update the test case 'should allow Article object with readingTime field set to decimal number' as Math.ceil() should always return an integer value, not decimals like 3.5",
+      "fulfilled": false,
+      "evidence": "Test case 'should allow Article object with readingTime field set to decimal number' is still present in the diff at lines +64-78 with readingTime: 3.5, which contradicts Math.ceil() returning only integers."
+    },
+    {
+      "checklist_item": "Update the test case 'should allow large readingTime values for long articles' to verify the actual calculated value based on word count (100000 characters of 'A' repeated = 100000 words, which should result in Math.ceil(100000/200) = 500 minutes)",
+      "fulfilled": false,
+      "evidence": "Test case at lines +164-182 has body: 'A'.repeat(100000) and readingTime: 500, but does not verify the calculation logic. It only checks that readingTime is 500 and greater than 0, not that it was calculated from the body content."
+    },
+    {
+      "checklist_item": "Add test case to verify word counting logic handles multiple spaces between words correctly",
+      "fulfilled": false,
+      "evidence": "No test case found that verifies word counting with multiple spaces between words."
+    },
+    {
+      "checklist_item": "Add test case to verify word counting logic handles newlines and special characters appropriately",
+      "fulfilled": false,
+      "evidence": "No test case found that verifies word counting with newlines and special characters."
+    },
+    {
+      "checklist_item": "Add test case to verify that readingTime is always an integer (no decimal values) due to Math.ceil usage",
+      "fulfilled": false,
+      "evidence": "No test case explicitly verifies that readingTime is always an integer. In fact, test at lines +64-78 allows readingTime: 3.5, which contradicts this requirement."
+    },
+    {
+      "checklist_item": "Update test expectations to align with the business rule that readingTime must be at least 1 minute if any text is present in the body",
+      "fulfilled": false,
+      "evidence": "Test case at lines +48-62 allows readingTime: 0 with body: 'Test Body', which violates the minimum value of 1 minute rule when text is present."
+    }
+  ]
+}
