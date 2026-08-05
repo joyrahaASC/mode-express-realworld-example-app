@@ -1,3 +1,9 @@
 {
-  "test_impact": []
+  "test_impact": [
+    {
+      "coverage_gap": false,
+      "starter_snippets": "// No test snippets required for article.model.ts\n// \n// RATIONALE:\n// The modification to article.model.ts adds only a TypeScript interface property:\n//   readingTime?: number\n//\n// TypeScript interfaces are compile-time constructs with no runtime behavior.\n// They do not contain executable logic, branches, or conditionals that require testing.\n//\n// TEST COVERAGE STRATEGY:\n// - The actual readingTime calculation logic is implemented in article.mapper.ts (Tier 1)\n// - Comprehensive test coverage is planned in article.service.test.ts (Tier 4) with 16 test steps\n// - Tests will verify:\n//   * readingTime field presence in all article responses\n//   * Correct calculation: Math.ceil(wordCount / 200) with minimum 1 minute\n//   * Edge cases: 200 words = 1 min, 450 words = 3 min, 50 words = 1 min\n//   * Integration across getArticle, getArticles, and getFeed endpoints\n//\n// The type definition change in article.model.ts is validated through:\n// 1. TypeScript compilation (type safety)\n// 2. Integration tests in article.service.test.ts (runtime behavior)\n// 3. Backward compatibility (optional field maintains existing contracts)\n//\n// CONCLUSION: No additional test file needed for this model definition change.",
+      "target_file": "src/app/routes/article/article.model.ts"
+    }
+  ]
 }
