@@ -1,3 +1,9 @@
 {
-  "test_impact": []
+  "test_impact": [
+    {
+      "coverage_gap": false,
+      "starter_snippets": "// NO UNIT TESTS REQUIRED FOR article.model.ts\n// \n// Rationale:\n// - article.model.ts contains only TypeScript interface definitions (compile-time type checking)\n// - No runtime logic, branches, or conditionals exist in this file\n// - The optional readingTime field is a pure type annotation with no executable code\n//\n// Test Coverage Strategy:\n// The readingTime feature is comprehensively tested at the appropriate layers:\n//\n// 1. Unit Tests (article.mapper.ts):\n//    - Test calculateReadingTime() helper function with various word counts\n//    - Verify Math.ceil(wordCount / 200) calculation logic\n//    - Test edge cases: null/undefined body, empty string, very short content\n//    - Ensure minimum value of 1 minute is enforced\n//\n// 2. Integration Tests (article.service.test.ts - already specified in Tier 4):\n//    - Verify readingTime field presence in getArticle() responses\n//    - Verify readingTime field presence in getArticles() list responses\n//    - Verify readingTime field presence in getFeed() responses\n//    - Test with articles of varying body lengths (50, 200, 450 words)\n//    - Validate readingTime values match expected calculations\n//\n// 3. Type Safety:\n//    - TypeScript compiler validates the Article interface at build time\n//    - Optional field (readingTime?: number) ensures backward compatibility\n//    - Any code consuming Article type will get compile-time type checking\n//\n// Recommendation:\n// Focus test efforts on article.mapper.ts (calculation logic) and \n// article.service.test.ts (integration testing) as outlined in the \n// execution tiers. No additional tests needed for this model file.",
+      "target_file": "src/app/routes/article/article.model.ts"
+    }
+  ]
 }
