@@ -1,0 +1,24 @@
+{
+  "repo": "joyrahaASC/mode-express-realworld-example-app",
+  "pr_id": "4",
+  "dependency_tiers": {
+    "tier_0_contracts": [
+      "src/tests/services/article.service.test.ts",
+      "src/app/routes/article/article.mapper.ts",
+      "src/app/routes/article/article.service.ts",
+      "src/app/routes/article/article.model.ts"
+    ],
+    "tier_1_consumers": [
+      "src/prisma/seed.ts",
+      "src/app/routes/article/comment.model.ts",
+      "src/app/routes/article/article.controller.ts",
+      "src/app/routes/auth/user.model.ts"
+    ],
+    "tier_2_isolated": [
+      "src/app/routes/article/author.mapper.ts",
+      "src/app/routes/profile/profile.utils.ts",
+      "src/app/routes/auth/auth.service.ts",
+      "src/app/routes/routes.ts"
+    ]
+  }
+}
