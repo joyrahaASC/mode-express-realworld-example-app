@@ -1,3 +1,9 @@
 {
-  "test_impact": []
+  "test_impact": [
+    {
+      "coverage_gap": false,
+      "starter_snippets": "// No test snippets required for article.model.ts\n// \n// Rationale:\n// - This file contains only TypeScript interface definitions (Article interface)\n// - The modification adds an optional field: readingTime?: number\n// - TypeScript interfaces are compile-time type definitions with no runtime behavior\n// - Interfaces cannot be unit tested as they contain no executable logic\n// - Type safety is enforced by the TypeScript compiler, not runtime tests\n//\n// Test Coverage Strategy:\n// - The readingTime field will be tested in article.service.test.ts (Tier 4)\n// - Integration tests will verify the field appears in API responses\n// - The calculateReadingTime logic will be tested in article.mapper.ts tests\n// - Type compatibility is validated at compile time by TypeScript\n//\n// Conclusion: No coverage gap exists for this type definition file.",
+      "target_file": "src/app/routes/article/article.model.ts"
+    }
+  ]
 }
