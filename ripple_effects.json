@@ -1,0 +1,39 @@
+{
+  "ripples": [
+    {
+      "is_broken": false,
+      "fix_suggestion": "No fix required. The Article interface is being modified to add an optional readingTime field, which is backward compatible. The User model only references Article as a type for array properties (articles and favorites), and adding an optional field to Article does not break this usage.",
+      "target_file": "src/app/routes/auth/user.model.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No changes required. The author.mapper.ts file is not affected by the article readingTime feature. The contract_shifts array is empty, indicating no breaking changes to any contracts that this file depends on. The authorMapper function operates independently on author data and does not interact with article body or readingTime calculations.",
+      "target_file": "src/app/routes/article/author.mapper.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No changes required. The Article interface modification adds only an optional field (readingTime?: number), which is backward compatible. The Comment model uses Article as a type reference for an optional property and does not access specific Article fields or methods, so it remains fully compatible with the updated Article interface.",
+      "target_file": "src/app/routes/article/comment.model.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No fix required. The routes.ts file only imports and registers controllers via Express Router. The changes being made (adding readingTime field to article responses) are additive and occur in article.mapper.ts, article.model.ts, and article.service.ts. No contract shifts were detected, and the controller exports remain unchanged. The file continues to function correctly without modifications.",
+      "target_file": "src/app/routes/routes.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No changes required. The profile.utils.ts file is not affected by the Article model contract changes (readingTime field addition). This file only handles Profile mapping from User data and has no dependencies on Article-related contracts.",
+      "target_file": "src/app/routes/profile/profile.utils.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No fix required. The changes to article.mapper.ts and article.service.ts are purely additive (adding readingTime field to response). The seed.ts file calls createArticle() with the same parameters and only uses the returned article.slug field, which remains unchanged. The new readingTime field does not affect existing functionality.",
+      "target_file": "src/prisma/seed.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No fix needed. This authentication service file is not affected by the Article readingTime feature changes. The contract_shifts array is empty, and this file does not import or reference any article-related modules that are being modified.",
+      "target_file": "src/app/routes/auth/auth.service.ts"
+    }
+  ]
+}
