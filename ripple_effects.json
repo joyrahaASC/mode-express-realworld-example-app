@@ -1,0 +1,44 @@
+{
+  "ripples": [
+    {
+      "is_broken": false,
+      "fix_suggestion": "No fix required. The profile.utils.ts file is not affected by any contract shifts. The feature adds readingTime calculation to Article-related files only, and this profile mapper function operates independently on User/Profile entities with no dependencies on Article contracts.",
+      "target_file": "src/app/routes/profile/profile.utils.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No changes required. The author.mapper.ts file is not affected by the readingTime feature addition to articles. The contract_shifts_results shows no broken contracts, and this file only handles author data mapping (username, bio, image, following) which is independent of article reading time calculations.",
+      "target_file": "src/app/routes/article/author.mapper.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No changes required. The routes.ts file only imports and composes controllers without directly calling any modified functions. The contract shifts are empty, and the file's role as a routing orchestrator means it is not affected by the addition of the readingTime field to the Article model or mapper. All changes are additive and handled within the article domain (mapper, service, model, tests) without breaking the controller interface that routes.ts depends on.",
+      "target_file": "src/app/routes/routes.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No fix required. The Article interface is being modified to add an optional readingTime field (readingTime?: number), which maintains backward compatibility. The User model imports and uses Article type in array properties (articles: Article[], favorites: Article[]), and adding an optional field does not break existing type references or usage patterns.",
+      "target_file": "src/app/routes/auth/user.model.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No fix required. The Article interface is being extended with an optional readingTime field, which is a non-breaking change. The comment.model.ts file only uses Article as a type reference for an optional property, and adding optional fields to TypeScript interfaces maintains backward compatibility.",
+      "target_file": "src/app/routes/article/comment.model.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No fix required. The seed.ts file calls createArticle() with the existing parameters (title, description, body, tagList) and user id. The new readingTime field is calculated automatically in article.mapper.ts from the body content and does not require any changes to the createArticle() function signature or its callers. The contract remains backward compatible.",
+      "target_file": "src/prisma/seed.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No fix needed. The file src/app/routes/auth/auth.service.ts is not affected by any contract shifts. The contract_shifts array is empty, indicating no breaking changes to consumed dependencies. This authentication service file operates independently of the article-related changes (reading time calculation) being implemented in this feature.",
+      "target_file": "src/app/routes/auth/auth.service.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No fix needed. The controller file does not break because: (1) No contract shifts were detected in the contract_shifts array, (2) All service method signatures (getArticles, getFeed, getArticle, createArticle, updateArticle, etc.) remain unchanged - they still accept the same parameters, (3) The new readingTime field being added to article responses is purely additive and does not affect how the controller calls these methods or passes through their responses, (4) The controller acts as a pass-through layer that simply invokes service methods and returns their results via res.json(), so additional fields in the response payload do not require controller changes.",
+      "target_file": "src/app/routes/article/article.controller.ts"
+    }
+  ]
+}
