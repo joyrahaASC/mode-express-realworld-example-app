@@ -1,0 +1,94 @@
+{
+  "missing_requirements": [
+    {
+      "file": "src/app/routes/article/article.model.ts",
+      "checklist_item": "Locate the Article interface definition that specifies the TypeScript structure for article entities",
+      "reason": "The diff removes the Article interface definition (lines -3 to -11) and replaces it with test code. The interface definition is imported from './article.model' but not defined in this file.",
+      "severity": "HIGH (Tier 4)"
+    },
+    {
+      "file": "src/app/routes/article/article.model.ts",
+      "checklist_item": "Add new optional field to the Article interface: readingTime?: number",
+      "reason": "The Article interface definition was removed from this file. The diff shows test code that uses readingTime field but does not show the interface definition being modified.",
+      "severity": "HIGH (Tier 4)"
+    },
+    {
+      "file": "src/app/routes/article/article.model.ts",
+      "checklist_item": "Add JSDoc comment above readingTime field: /** Estimated reading time in minutes based on 200 words per minute */",
+      "reason": "No JSDoc comment found in the diff. The interface definition itself is not present in the modified file.",
+      "severity": "HIGH (Tier 4)"
+    },
+    {
+      "file": "src/app/routes/article/article.model.ts",
+      "checklist_item": "Verify that the readingTime field is positioned after existing fields (slug, title, description, body, tagList, createdAt, updatedAt, favorited, favoritesCount, author)",
+      "reason": "The diff does not show the Article interface definition. While test code at line +154 checks field ordering, the actual interface modification is not present in this diff.",
+      "severity": "HIGH (Tier 4)"
+    },
+    {
+      "file": "src/app/routes/article/article.model.ts",
+      "checklist_item": "Ensure readingTime is marked as optional (?) since it's a computed field not stored in database",
+      "reason": "The Article interface definition is not present in the diff to verify the optional marker. The interface was removed and replaced with test code.",
+      "severity": "HIGH (Tier 4)"
+    },
+    {
+      "file": "src/app/routes/article/article.mapper.ts",
+      "checklist_item": "Locate the articleMapper function that transforms raw article data into standardized response format",
+      "reason": "The diff shows the original articleMapper function was removed (lines starting with '-') and replaced with test code. The actual implementation is not present in this file anymore.",
+      "severity": "HIGH (Tier 1)"
+    },
+    {
+      "file": "src/app/routes/article/article.mapper.ts",
+      "checklist_item": "Add a new helper function calculateReadingTime that accepts article body string as parameter",
+      "reason": "No calculateReadingTime helper function is defined in the diff. Only test cases referencing it exist, but the actual implementation is missing from this file.",
+      "severity": "HIGH (Tier 1)"
+    },
+    {
+      "file": "src/app/routes/article/article.mapper.ts",
+      "checklist_item": "Inside calculateReadingTime: Split body text by whitespace to count words, handling null/undefined body by defaulting to empty string",
+      "reason": "The calculateReadingTime function implementation is not present in the diff to verify this logic.",
+      "severity": "HIGH (Tier 1)"
+    },
+    {
+      "file": "src/app/routes/article/article.mapper.ts",
+      "checklist_item": "Inside calculateReadingTime: Calculate wordCount using body.trim().split(/\\s+/).filter(word => word.length > 0).length",
+      "reason": "The calculateReadingTime function implementation is not present in the diff to verify this specific calculation method.",
+      "severity": "HIGH (Tier 1)"
+    },
+    {
+      "file": "src/app/routes/article/article.mapper.ts",
+      "checklist_item": "Inside calculateReadingTime: Apply formula Math.ceil(wordCount / 200) to get reading time in minutes",
+      "reason": "The calculateReadingTime function implementation is not present in the diff to verify this formula.",
+      "severity": "HIGH (Tier 1)"
+    },
+    {
+      "file": "src/app/routes/article/article.mapper.ts",
+      "checklist_item": "Inside calculateReadingTime: Return Math.max(1, calculatedTime) to ensure minimum value of 1 minute",
+      "reason": "The calculateReadingTime function implementation is not present in the diff to verify this minimum value logic.",
+      "severity": "HIGH (Tier 1)"
+    },
+    {
+      "file": "src/app/routes/article/article.mapper.ts",
+      "checklist_item": "In articleMapper function, after mapping existing fields (slug, title, description, body, tagList, createdAt, updatedAt, favorited, favoritesCount, author), add new field: readingTime: calculateReadingTime(article.body)",
+      "reason": "The articleMapper function implementation was removed from this file. The diff shows '-const articleMapper = (article: any, id?: number) => ({' and the entire original implementation deleted, replaced with test code.",
+      "severity": "HIGH (Tier 1)"
+    },
+    {
+      "file": "src/app/routes/article/article.mapper.ts",
+      "checklist_item": "MITIGATION: Ensure backward compatibility - the readingTime field is additive only and does not modify existing article response structure to prevent breaking article.service.ts, article.controller.ts, seed.ts, and article.service.test.ts consumers",
+      "reason": "Cannot verify backward compatibility as the articleMapper implementation is not present in this diff. The file now contains only test code.",
+      "severity": "HIGH (Tier 1)"
+    },
+    {
+      "file": "src/app/routes/article/article.mapper.ts",
+      "checklist_item": "Verify that the returned article object now includes readingTime as a number field in minutes",
+      "reason": "The articleMapper implementation is not present in this diff to verify the returned object structure. Only test expectations exist: 'expect(result.readingTime).toBe(1);' but no actual implementation.",
+      "severity": "HIGH (Tier 1)"
+    },
+    {
+      "file": "src/tests/services/article.service.test.ts",
+      "checklist_item": "Update existing test assertions to include readingTime field validation where article responses are checked",
+      "reason": "No modifications to existing test cases (favoriteArticle, unfavoriteArticle, deleteComment) to add readingTime validation",
+      "severity": "HIGH (Tier 4)"
+    }
+  ]
+}
