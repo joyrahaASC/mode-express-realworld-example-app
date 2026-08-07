@@ -1,0 +1,44 @@
+{
+  "ripples": [
+    {
+      "is_broken": false,
+      "fix_suggestion": "No fix required. The Article interface is only receiving an optional field addition (readingTime?: number), which is a non-breaking change in TypeScript. The Comment interface uses Article as a type reference for an optional property and does not construct or manipulate Article objects directly, so it remains fully compatible.",
+      "target_file": "src/app/routes/article/comment.model.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No fix required. The Article interface is being extended with an optional readingTime field, which is a non-breaking change. The User interface references Article[] for articles and favorites properties, and these will continue to work correctly with the enhanced Article type.",
+      "target_file": "src/app/routes/auth/user.model.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No changes required. The author.mapper.ts file is not affected by the readingTime feature addition to articles. This mapper handles author/profile data transformation and has no dependencies on article body content or reading time calculations. The contract_shifts array is empty, confirming no breaking changes to any contracts this file consumes.",
+      "target_file": "src/app/routes/article/author.mapper.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No changes required. The routes.ts file only imports and composes controllers without directly interacting with the Article model or mapper. Since no contract shifts were detected and the file operates at the routing orchestration layer, it remains compatible with the readingTime feature addition.",
+      "target_file": "src/app/routes/routes.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No fix required. The seed.ts file is not broken by the contract changes. The readingTime field is a computed field added to article responses via the mapper layer, and the createArticle function signature remains unchanged. The seed file will continue to work without modifications, and articles created by the seed will automatically include the readingTime field in API responses.",
+      "target_file": "src/prisma/seed.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No changes required. The profile.utils.ts file is unaffected by the Article readingTime feature implementation. There are no contract shifts reported, and this file only handles profile mapping functionality which is independent of article-related changes.",
+      "target_file": "src/app/routes/profile/profile.utils.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No fix required. The auth.service.ts file is not affected by the article reading time feature changes. The contract_shifts_results shows no broken contracts, and this authentication service has no dependencies on article-related functionality. All changes are isolated to the article domain (article.mapper.ts, article.service.ts, article.model.ts, article.service.test.ts).",
+      "target_file": "src/app/routes/auth/auth.service.ts"
+    },
+    {
+      "is_broken": false,
+      "fix_suggestion": "No fix required. The contract_shifts array is empty, indicating no breaking changes to the article service functions. The controller file calls service functions (getArticles, getFeed, getArticle, createArticle, updateArticle, favoriteArticle, unfavoriteArticle) with the same parameters they expect. The addition of the readingTime field to article responses is an additive change handled in the mapper layer and does not break the controller's usage of these functions.",
+      "target_file": "src/app/routes/article/article.controller.ts"
+    }
+  ]
+}
