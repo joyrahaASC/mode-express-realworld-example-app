@@ -1,3 +1,9 @@
 {
-  "test_impact": []
+  "test_impact": [
+    {
+      "coverage_gap": false,
+      "starter_snippets": "// ============================================================================\n// TEST IMPACT ANALYSIS: article.model.ts\n// ============================================================================\n//\n// COVERAGE ASSESSMENT: No coverage gap detected\n//\n// RATIONALE:\n// - The file article.model.ts contains only TypeScript interface definitions\n// - TypeScript interfaces are compile-time constructs with no runtime logic\n// - There are no branches, conditionals, or executable code to test\n// - The optional readingTime field is a type annotation only\n//\n// TESTING STRATEGY:\n// - Type definitions do not require unit tests (they're stripped at compilation)\n// - The actual readingTime calculation logic resides in article.mapper.ts\n// - Integration tests in article.service.test.ts already cover the feature:\n//   * Test case: 'should include readingTime field in article response'\n//   * Test case: 'should calculate readingTime correctly for 400+ words'\n//   * Test case: 'should default readingTime to 1 minute for short articles'\n//   * Test case: 'should include readingTime in article list from getArticles'\n//   * Test case: 'should include readingTime in feed articles from getFeed'\n//\n// RECOMMENDATION:\n// - No additional tests required for this model file\n// - Ensure article.service.test.ts implements the 16-step test checklist\n// - Verify TypeScript compilation passes with the new optional field\n// - Confirm backward compatibility: existing code constructing Article objects\n//   without readingTime should continue to work (optional field)\n//\n// ============================================================================",
+      "target_file": "src/app/routes/article/article.model.ts"
+    }
+  ]
 }
