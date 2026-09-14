@@ -1,0 +1,42 @@
+# Repository Metadata Knowledge Base
+
+## `src/app/models`
+| File Path | Core Purpose |
+|-----------|--------------|
+| `src/app/models/http-exception.model.ts` | Defines a custom HttpException class that extends the native Error class to represent HTTP-related errors with an associated error code. This exception class is used throughout the application to standardize error handling for HTTP operations. |
+
+## `src/app/routes`
+| File Path | Core Purpose |
+|-----------|--------------|
+| `src/app/routes/routes.ts` | Serves as the main API router configuration file that aggregates and mounts all feature-specific controllers (tags, articles, auth, profile) under a unified '/api' route prefix. Acts as the central routing orchestrator for the application's REST API endpoints. |
+
+## `src/app/routes/article`
+| File Path | Core Purpose |
+|-----------|--------------|
+| `src/app/routes/article/article.controller.ts` | Defines Express router endpoints for article and comment management operations including CRUD operations, favoriting, and feed retrieval. Routes handle authentication via middleware and delegate business logic to the article service layer. |
+| `src/app/routes/article/article.mapper.ts` | Transforms raw article data objects into a standardized format for API responses. Maps article properties including slug, title, description, body, tag list, timestamps, favorite status, and embeds the mapped author object using the authorMapper dependency. |
+| `src/app/routes/article/article.model.ts` | Defines the Article data model interface for representing article entities in the application. Specifies the structure of article objects including metadata (id, title, slug, description), associated comments, and favorited status. |
+| `src/app/routes/article/article.service.ts` | Provides comprehensive article management services for a blogging platform, including CRUD operations for articles and comments, feed generation, favoriting/unfavoriting functionality, and complex query building with tag and author filtering. Orchestrates Prisma database operations and transforms raw data using mappers for consistent API responses. |
+| `src/app/routes/article/author.mapper.ts` | Transforms raw author data into a standardized author object format with username, bio, image, and following status. Determines if a given user (by id) is following the author by checking the followedBy relationship array. |
+| `src/app/routes/article/comment.model.ts` | Defines the Comment data model interface representing user comments in the system. Establishes the structure for comment entities including metadata fields (id, timestamps, body) and an optional relationship to an Article entity. |
+
+## `src/app/routes/auth`
+| File Path | Core Purpose |
+|-----------|--------------|
+| `src/app/routes/auth/auth.controller.ts` | Defines Express REST API routes for user authentication and management operations. Handles user registration, login, retrieval of current user, and user profile updates by delegating to auth service functions and applying authentication middleware where required. |
+| `src/app/routes/auth/auth.service.ts` | Provides user authentication and account management services including registration, login, profile retrieval, and updates. Handles password hashing, user uniqueness validation, and JWT token generation for authenticated sessions. |
+| `src/app/routes/auth/auth.ts` | Provides JWT authentication middleware for Express.js routes with two modes: required (enforces authentication) and optional (allows unauthenticated access). Extracts JWT tokens from Authorization headers supporting both 'Token' and 'Bearer' schemes. |
+| `src/app/routes/auth/register-input.model.ts` | Defines a TypeScript interface for user registration input data. Specifies the required fields (email, username, password) and optional fields (image, bio, demo) needed to create a new user account. |
+| `src/app/routes/auth/registered-user.model.ts` | Defines the TypeScript interface for a registered user entity in the application. Specifies the data structure containing user identification, authentication token, profile information (email, username, bio, image), with nullable fields for optional profile data. |
+| `src/app/routes/auth/token.utils.ts` | Generates JWT authentication tokens for users by encoding a user ID payload with a secret key and 60-day expiration. Provides a utility function for creating signed tokens used in authentication workflows. |
+| `src/app/routes/auth/user-request.d.ts` | Extends the Express Request interface to include an optional authentication object containing user information with an ID property. This TypeScript declaration file provides type safety for authenticated request handling across the application. |
+| `src/app/routes/auth/user.model.ts` | Defines the User entity interface for the application, representing user account data including profile information, authentication credentials, and relationships to articles, comments, favorites, and other users through following/follower connections. |
+
+## `src/app/routes/profile`
+| File Path | Core Purpose |
+|-----------|--------------|
+| `src/app/routes/profile/profile.controller.ts` | Defines Express router endpoints for user profile operations including retrieving profiles, following users, and unfollowing users. Routes handle GET, POST, and DELETE requests with optional or required authentication middleware, delegating business logic to profile service functions. |
+| `src/app/routes/profile/profile.model.ts` | Defines the Profile data structure interface for user profile information. Specifies the shape of profile objects containing username, bio, image URL, and following status properties. |
+| `src/app/routes/profile/profile.service.ts` | Provides user profile management services including retrieving user profiles with follower information, and managing follow/unfollow relationships between users. Interacts with the database through Prisma ORM and transforms raw user data into profile objects using a mapper utility. |
+| `src/app/routes/profile/profile.utils.ts` | Transforms raw user data into a Profile object by mapping username, bio, and image fields, and determines the following status by checking if the current user ID exists in the user's followedBy array. |
+
