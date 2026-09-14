@@ -1,0 +1,25 @@
+{
+    "src/app/routes/article/article.mapper.ts": [
+        "./author.mapper"
+    ],
+    "src/app/routes/article/article.model.ts": [
+        "./comment.model"
+    ],
+    "src/app/routes/article/comment.model.ts": [
+        "./article.model"
+    ],
+    "src/app/routes/article/author.mapper.ts": [
+        "../auth/user.model"
+    ],
+    "src/app/routes/article/article.controller.ts": [
+        "../auth/auth",
+        "./article.service"
+    ],
+    "src/app/routes/article/article.service.ts": [
+        "../../../prisma/prisma-client",
+        "../../models/http-exception.model",
+        "../profile/profile.utils",
+        "./article.mapper",
+        "../tag/tag.model"
+    ]
+}
