@@ -1,5 +1,10 @@
 # Repository Metadata Knowledge Base
 
+## `src`
+| File Path | Core Purpose |
+|-----------|--------------|
+| `src/main.ts` | Serves as the main Express application entry point, configuring middleware (CORS, body-parser), routing, static asset serving, and global error handling. Initializes and starts the HTTP server on the specified port. |
+
 ## `src/app/models`
 | File Path | Core Purpose |
 |-----------|--------------|
@@ -39,4 +44,56 @@
 | `src/app/routes/profile/profile.model.ts` | Defines the Profile data structure interface for user profile information. Specifies the shape of profile objects containing username, bio, image URL, and following status properties. |
 | `src/app/routes/profile/profile.service.ts` | Provides user profile management services including retrieving user profiles with follower information, and managing follow/unfollow relationships between users. Interacts with the database through Prisma ORM and transforms raw user data into profile objects using a mapper utility. |
 | `src/app/routes/profile/profile.utils.ts` | Transforms raw user data into a Profile object by mapping username, bio, and image fields, and determines the following status by checking if the current user ID exists in the user's followedBy array. |
+
+## `src/app/routes/tag`
+| File Path | Core Purpose |
+|-----------|--------------|
+| `src/app/routes/tag/tag.controller.ts` | Defines an Express router that exposes a GET endpoint for retrieving the top 10 popular tags. Applies optional authentication middleware and delegates tag retrieval logic to a service layer. |
+| `src/app/routes/tag/tag.model.ts` | Defines a TypeScript interface named Tag that represents a simple data structure with a single string property 'name'. This interface serves as a type contract for tag objects used throughout the application. |
+| `src/app/routes/tag/tag.service.ts` | Retrieves and returns the top 10 most popular tag names associated with articles written by demo authors or a specific author by ID. Queries the database using Prisma ORM to fetch tags ordered by article count in descending order. |
+
+## `src/prisma`
+| File Path | Core Purpose |
+|-----------|--------------|
+| `src/prisma/prisma-client.ts` | Provides a singleton instance of PrismaClient for database access across the application. Prevents multiple Prisma Client instances in development by caching the client in the Node.js global scope. |
+| `src/prisma/schema.prisma` | Defines the Prisma database schema for a social blogging platform with PostgreSQL. Establishes data models for Articles, Comments, Tags, and Users with their relationships including article authorship, favorites, user follows, and comment threads. |
+| `src/prisma/seed.ts` | Database seeding script that generates demo data for a social blogging platform. Creates 12 users, generates 12 articles per user, and adds comments from all users to each article using Prisma ORM and Falso data generators. |
+
+## `src/prisma/migrations/20210924225358_initial`
+| File Path | Core Purpose |
+|-----------|--------------|
+| `src/prisma/migrations/20210924225358_initial/migration.sql` | Defines the initial database schema migration for a blogging/social platform. Creates tables for Articles, Comments, Tags, Users, and their relationships including article-tag associations, user favorites, and user follows with appropriate foreign key constraints and indexes. |
+
+## `src/prisma/migrations/20211001143221_implicit_tags`
+| File Path | Core Purpose |
+|-----------|--------------|
+| `src/prisma/migrations/20211001143221_implicit_tags/migration.sql` | Database migration script that refactors the many-to-many relationship between Articles and Tags by replacing the explicit ArticleTags junction table with Prisma's implicit _ArticleToTag relation table. Adds a unique constraint on Tag names and establishes cascading foreign key relationships. |
+
+## `src/prisma/migrations/20211105153605_api_url`
+| File Path | Core Purpose |
+|-----------|--------------|
+| `src/prisma/migrations/20211105153605_api_url/migration.sql` | Database migration script that alters the User table schema by setting a default value for the image column. This ensures all User records without an explicit image will use the specified default profile image URL from the realworld.io API. |
+
+## `src/prisma/migrations/20211221184529_deprecated_preview`
+| File Path | Core Purpose |
+|-----------|--------------|
+| `src/prisma/migrations/20211221184529_deprecated_preview/migration.sql` | Database migration script that renames unique constraint indexes for Article, Tag, and User tables to follow a standardized naming convention. Transforms legacy index names with '_unique' suffix to modern '_key' suffix pattern. |
+
+## `src/tests`
+| File Path | Core Purpose |
+|-----------|--------------|
+| `src/tests/prisma-mock.ts` | Provides a mocked Prisma client instance for testing purposes using jest-mock-extended. Automatically resets the mock before each test to ensure test isolation and consistent behavior across test suites. |
+
+## `src/tests/services`
+| File Path | Core Purpose |
+|-----------|--------------|
+| `src/tests/services/article.service.test.ts` | Contains unit tests for the ArticleService module, specifically testing the deleteComment, favoriteArticle, and unfavoriteArticle functions. Validates error handling for missing users/comments and verifies that favorite/unfavorite operations return articles with favoritesCount property using mocked Prisma database interactions. |
+| `src/tests/services/auth.service.test.ts` | Contains comprehensive unit tests for the authentication service, validating user creation, login, retrieval, and update operations. Tests cover validation rules for empty fields, duplicate users, password verification, and token generation using mocked Prisma database interactions. |
+| `src/tests/services/profile.service.test.ts` | Contains unit tests for the ProfileService module, validating the behavior of getProfile, followUser, and unfollowUser functions. Tests verify that these functions correctly return profile data with following properties and handle error cases when users are not found. |
+| `src/tests/services/tag.service.test.ts` | Contains unit test specifications for the TagService component, specifically testing the getTags method. Currently includes a placeholder TODO test case that is skipped, indicating incomplete test coverage for retrieving tag lists. |
+
+## `src/tests/utils`
+| File Path | Core Purpose |
+|-----------|--------------|
+| `src/tests/utils/profile.utils.test.ts` | Contains unit tests for the profileMapper utility function from the profile routes module. Tests verify correct mapping of user profile data including username, bio, image, and following status based on the followedBy relationship array. |
 
